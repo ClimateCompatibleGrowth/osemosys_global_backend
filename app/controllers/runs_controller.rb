@@ -1,5 +1,5 @@
 class RunsController < ApplicationController
   def index
-    @runs = Run.all.limit(10)
+    @runs = Run.order(id: :desc).limit(10)
   end
 end
