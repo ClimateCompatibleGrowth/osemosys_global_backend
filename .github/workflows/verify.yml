@@ -26,7 +26,7 @@ jobs:
 
       - name: Setup test database
         env:
-          DATABASE_URL: "postgres://pguser:password@localhost/osemosys_global_backend_test"
+          DATABASE_URL: "postgres://pguser:password@localhost:5432/osemosys_global_backend_test"
           RAILS_ENV: test
         run: |
           bin/rails db:setup
