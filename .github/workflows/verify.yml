@@ -1,6 +1,10 @@
 name: Verify
 on: [push]
 
+env:
+  DATABASE_URL: "postgres://pguser:password@localhost:5432/osemosys_global_backend_test"
+  RAILS_ENV: test
+
 jobs:
   tests:
     name: Tests
@@ -25,9 +29,6 @@ jobs:
           bundler-cache: true
 
       - name: Setup test database
-        env:
-          DATABASE_URL: "postgres://pguser:password@localhost:5432/osemosys_global_backend_test"
-          RAILS_ENV: test
         run: |
           bin/rails db:setup
 
