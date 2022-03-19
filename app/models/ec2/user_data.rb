@@ -15,7 +15,18 @@ module Ec2
     def user_data
       <<~BASH
         #!/bin/bash
+        set -e
+
+        terminate_instance() {
+          # Uncomment when going live
+          # sudo shutdown -h now
+        }
+
+        trap "terminate_instance" ERR
+
         su - ubuntu -c '#{solve_run_command}'
+
+        terminate_instance
       BASH
     end
 
