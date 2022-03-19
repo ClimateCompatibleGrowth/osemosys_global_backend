@@ -28,9 +28,12 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Lint
+        run: bin/rubocop
+
       - name: Setup test database
         run: |
           bin/rails db:setup
 
       - name: Run tests
-        run: bundle exec rspec
+        run: bin/rspec
