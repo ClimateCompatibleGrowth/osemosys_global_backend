@@ -1,24 +1,26 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Setting up the linux machine:
 
-Things you may want to cover:
+```
+sudo apt-get update
+sudo apt-get install glpk-utils coinor-cbc
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+chmod +x Miniconda3-latest-Linux-x86_64.sh
+# ... install Miniconda
+conda config --set auto_activate_base false
+rm Miniconda3-latest-Linux-x86_64.sh
+# From https://github.com/OSeMOSYS/osemosys_global
+git clone --recurse-submodules https://github.com/OSeMOSYS/osemosys_global.git
+conda env create -f workflow/envs/osemosys-global.yaml
+```
 
-* Ruby version
+Then:
 
-* System dependencies
+```
+# script.sh
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+eval "$(conda shell.bash hook)"
+conda activate osemosys-global
+snakemake -c
+```
