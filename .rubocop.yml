@@ -8,6 +8,7 @@ AllCops:
   Exclude:
   - "bin/*"
   - "db/schema.rb"
+  - "db/migrate/20220319165502_create_active_storage_tables.active_storage.rb"
   # https://github.com/rubocop/rubocop/issues/9832
   - "vendor/bundle/**/*"
 
