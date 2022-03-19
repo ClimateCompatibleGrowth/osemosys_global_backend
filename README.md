@@ -20,7 +20,6 @@ Then:
 ```
 # script.sh
 
-eval "$(conda shell.bash hook)"
-conda activate osemosys-global
+source miniconda3/bin/activate osemosys-global
 snakemake -c
 ```

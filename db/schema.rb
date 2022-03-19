@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_19_165502) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_19_183629) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_19_165502) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "ec2_instances", force: :cascade do |t|
+    t.bigint "run_id", null: false
+    t.datetime "started_at"
+    t.datetime "stopped_at"
+    t.string "ip"
+    t.string "instance_type"
+    t.string "aws_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["run_id"], name: "index_ec2_instances_on_run_id"
   end
 
   create_table "runs", force: :cascade do |t|

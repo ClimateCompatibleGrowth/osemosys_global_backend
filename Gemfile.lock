@@ -231,6 +231,7 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk-ec2
   bootsnap
+  factory_bot
   factory_bot_rails
   jbuilder
   pg
