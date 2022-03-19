@@ -22,6 +22,7 @@ module Ec2
     def solve_run_command
       <<~BASH.squish
         cd /home/ubuntu/osemosys_global/
+        && wget --output-document=/home/ubuntu/osemosys_global/config/config.yaml https://osemosys-global-backend.herokuapp.com/config.yaml
         && source /home/ubuntu/miniconda3/bin/activate osemosys-global
         && snakemake -c
       BASH
