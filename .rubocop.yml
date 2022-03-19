@@ -1,0 +1,218 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 3.0
+  NewCops: enable
+  Exclude:
+  - "bin/*"
+  - "db/schema.rb"
+
+Layout/LineLength:
+  Max: 100
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+Layout/ParameterAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/HashAlignment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Layout/FirstArgumentIndentation:
+  EnforcedStyle: consistent
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Layout/DotPosition:
+  EnforcedStyle: leading
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+Style/BlockDelimiters:
+  Description: Avoid using {...} for multi-line blocks (multiline chaining is always
+    ugly). Prefer {...} over do...end for single-line blocks.
+  StyleGuide: https://github.com/bbatsov/ruby-style-guide#single-line-blocks
+  Enabled: false
+
+Style/Lambda:
+  Description: 'Use the new lambda literal syntax for single-line blocks.'
+  Enabled: false
+
+Style/MultilineBlockChain:
+  Description: 'Avoid multi-line chains of blocks.'
+  StyleGuide: https://github.com/bbatsov/ruby-style-guide#single-line-blocks
+  Enabled: false
+
+Style/TrailingCommaInArguments:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+  SupportedStylesForMultiline:
+    - comma
+    - consistent_comma
+    - no_comma
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+  SupportedStylesForMultiline:
+    - comma
+    - consistent_comma
+    - no_comma
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+  SupportedStylesForMultiline:
+    - comma
+    - consistent_comma
+    - no_comma
+
+Style/Attr:
+  Exclude:
+    - app/graphql/**/*.rb
+    - db/schema.rb
+
+Metrics/BlockLength:
+  Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: true
+
+Naming/MemoizedInstanceVariableName:
+  EnforcedStyleForLeadingUnderscores: required
+  SupportedStylesForLeadingUnderscores:
+    - disallowed
+    - required
+    - optional
+
+Metrics/ClassLength:
+  Enabled: false
+
+Naming/RescuedExceptionsVariableName:
+  PreferredName: exception
+
+Lint/InheritException:
+  EnforcedStyle: standard_error
+
+Style/GuardClause:
+  Enabled: false
+
+RSpec/ContextWording:
+  Prefixes:
+    - when
+    - with
+    - without
+    - as
+    - and
+
+RSpec/DescribeClass:
+  Exclude:
+    - spec/lib/**/integration/**/*_spec.rb
+    - spec/lib/tasks/**/*_spec.rb
+    - spec/requests/**/*_spec.rb
+
+RSpec/DescribedClass:
+  EnforcedStyle: explicit
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/ImplicitSubject:
+  EnforcedStyle: single_statement_only
+
+RSpec/PredicateMatcher:
+  Enabled: false
+
+RSpec/EmptyLineAfterExample:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+Style/HashEachMethods:
+  Enabled: false
+
+Style/RedundantSelf:
+  Enabled: true
+  Exclude:
+    - app/models/concerns/sluggable.rb
+
+Style/HashAsLastArrayItem:
+  Enabled: false
+
+Style/OptionalBooleanParameter:
+  Enabled: true
+  Exclude:
+    - 'app/jobs/**/*'
+
+Style/SingleArgumentDig:
+  Enabled: false
+
+RSpec/VerifiedDoubles:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false
+
+Rails/ApplicationRecord:
+  Enabled: true
+
+Rails/UniqueValidationWithoutIndex:
+  Enabled: false
+
+Rails/SkipsModelValidations:
+  Enabled: true
+
+Rails/ReversibleMigration:
+  Enabled: true
+
+Rails/NotNullColumn:
+  Enabled: false
+
+Rails/CreateTableWithTimestamps:
+  Enabled: true
+
+Style/SymbolProc:
+  Enabled: true
+
+Naming/VariableNumber:
+  CheckSymbols: false
+
+Rails/EnvironmentVariableAccess:
+  Enabled: false
+
+Naming/InclusiveLanguage:
+  Enabled: true
+
+Style/ArgumentsForwarding:
+  Enabled: true
+  AllowOnlyRestArgument: false
+
+Style/OpenStructUse:
+  Enabled: true
+
+Style/LambdaCall:
+  Enabled: false

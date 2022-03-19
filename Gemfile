@@ -3,14 +3,17 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.0'
 
-gem 'rails', '~> 7.0.1'
+gem 'bootsnap', require: false
+gem 'jbuilder'
 gem 'pg'
 gem 'puma'
-gem 'jbuilder'
-gem 'bootsnap', require: false
+gem 'rails', '~> 7.0.1'
 
 group :development do
   gem 'pry'
+  gem 'rubocop'
+  gem 'rubocop-rails'
+  gem 'rubocop-rspec'
 end
 
 group :test do
