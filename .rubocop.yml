@@ -8,6 +8,8 @@ AllCops:
   Exclude:
   - "bin/*"
   - "db/schema.rb"
+  # https://github.com/rubocop/rubocop/issues/9832
+  - "vendor/bundle/**/*"
 
 Layout/LineLength:
   Max: 100
