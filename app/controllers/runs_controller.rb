@@ -10,4 +10,19 @@ class RunsController < ApplicationController
       format.yaml { render 'snakemake_config' }
     end
   end
+
+  def create
+    @run = Run.new(run_params)
+    if @run.save
+      render :show
+    else
+      render json: { errors: @run.errors.to_s }
+    end
+  end
+
+  private
+
+  def run_params
+    params.permit(:name)
+  end
 end
