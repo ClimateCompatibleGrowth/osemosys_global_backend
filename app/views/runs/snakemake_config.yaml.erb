@@ -1,0 +1,37 @@
+# Auto-generated config for run <%= @run.id %>
+
+# High Level Configuration
+inputDir: 'resources'
+outputDir: 'results'
+modelName: 'OsemosysGlobal'
+region: 'GLOBAL'
+
+# Scenario Name
+scenario: 'aTestScenario'
+
+# Temporal Parameters
+startYear: 2015
+endYear: 2050
+daytype: False
+dayparts:
+  #daypart : [start_hour (inclusive), end_hour (exclusive)]
+  D1: [0, 12]
+  D2: [12, 24]
+seasons:
+  #season : [month 1, month 2, ...] (all inclusive)
+  S1: [12, 1, 2]
+  S2: [3, 4, 5]
+  S3: [6, 7, 8]
+  S4: [9, 10, 11]
+
+# Spatial Parameters
+geographic_scope:
+  - 'IND'
+  - 'AFG'
+crossborderTrade: False
+
+# Emission Parameters
+emission_penalty: 50 # M$/MT CO2
+
+# Result Parameters
+results_by_country: True
