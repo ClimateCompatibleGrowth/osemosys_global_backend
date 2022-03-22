@@ -4,7 +4,10 @@ class RunsController < ApplicationController
   end
 
   def show
-    @run = Run.find(params[:id])
+    @run = Run.find_by(slug: params[:slug])
+
+    render_not_found and return unless @run
+
     respond_to do |format|
       format.json
       format.yaml { render 'snakemake_config' }
@@ -24,5 +27,9 @@ class RunsController < ApplicationController
 
   def run_params
     params.permit(:name)
+  end
+
+  def render_not_found
+    render json: { error: 'No run with that slug found.' }, status: :not_found
   end
 end
