@@ -3,6 +3,8 @@ class Run < ApplicationRecord
 
   validates :node1, :node2, :capacity, :start_year, :end_year, :slug, presence: true
 
+  store :resolution, accessors: %i[day_parts seasons], coder: JSON
+
   private
 
   def generate_slug

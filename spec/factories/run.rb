@@ -18,6 +18,5 @@ FactoryBot.define do
         ],
       }
     end
-    slug { "run-#{SecureRandom.hex(10)}" }
   end
 end
