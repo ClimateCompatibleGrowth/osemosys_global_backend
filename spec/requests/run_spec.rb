@@ -20,10 +20,9 @@ RSpec.describe 'Run queries' do
             { id: 'Summer', months: [7, 8, 9, 10, 11, 12] },
           ],
         },
-        slug: 'a-slug',
       )
 
-      get '/runs/a-slug.json'
+      get "/runs/#{run.slug}.json"
 
       result = JSON.parse(response.body).symbolize_keys
       expect(result[:id]).to eq(run.id)
@@ -42,7 +41,6 @@ RSpec.describe 'Run queries' do
           { 'id' => 'Summer', 'months' => [7, 8, 9, 10, 11, 12] },
         ],
       )
-      expect(result[:slug]).to eq('a-slug')
     end
 
     it 'renders a 404 if the run is not found' do

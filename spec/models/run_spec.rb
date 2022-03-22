@@ -12,22 +12,18 @@ RSpec.describe Run do
   end
 
   describe 'validations' do
-    it 'enforces correct seaons' do
+    it 'enforces correct sesaons' do
       run_with_malformed_seasons = build(
         :run,
         resolution: { seasons: 'something' },
       )
       run_with_missing_season_fields = build(
         :run,
-        resolution: { seasons: [{ months: (1..12).to_a }] },
-      )
-      run_with_incomplete_coverage = build(
-        :run,
-        resolution: { seasons: [{ months: (1..11).to_a, id: 'year' }] },
+        seasons: [{ months: (1..12).to_a }],
       )
       valid_run = build(
         :run,
-        resolution: { seasons: [{ months: (1..12).to_a, id: 'year' }] },
+        seasons: [{ months: (1..12).to_a, id: 'year' }],
       )
 
       expect(run_with_malformed_seasons).to be_invalid
@@ -38,9 +34,30 @@ RSpec.describe Run do
       expect(run_with_missing_season_fields.errors[:resolution]).to include(
         'Seasons are not in the correct format.',
       )
-      expect(run_with_incomplete_coverage).to be_invalid
-      expect(run_with_incomplete_coverage.errors[:resolution]).to include(
-        'Seasons are not in the correct format.',
+      expect(valid_run).to be_valid
+    end
+
+    it 'enforces correct day parts' do
+      run_with_malformed_day_parts = build(
+        :run,
+        day_parts: 'something',
+      )
+      run_with_missing_day_part_fields = build(
+        :run,
+        day_parts: [{ id: 'Morning', end_hour: 24 }],
+      )
+      valid_run = build(
+        :run,
+        day_parts: [{ id: 'Morning', start_hour: 0, end_hour: 24 }],
+      )
+
+      expect(run_with_malformed_day_parts).to be_invalid
+      expect(run_with_malformed_day_parts.errors[:resolution]).to include(
+        'Day parts are not in the correct format.',
+      )
+      expect(run_with_missing_day_part_fields).to be_invalid
+      expect(run_with_missing_day_part_fields.errors[:resolution]).to include(
+        'Day parts are not in the correct format.',
       )
       expect(valid_run).to be_valid
     end
