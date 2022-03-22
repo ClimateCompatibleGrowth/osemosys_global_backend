@@ -17,16 +17,16 @@ class RunsController < ApplicationController
   def create
     @run = Run.new(run_params)
     if @run.save
-      render :show
+      render action: :show, formats: :json
     else
-      render json: { errors: @run.errors.to_s }
+      render json: { errors: @run.errors.full_messages.to_sentence }, status: :bad_request
     end
   end
 
   private
 
   def run_params
-    params.permit(:name)
+    params.permit(:node1, :node2, :capacity, :start_year, :end_year, resolution: {})
   end
 
   def render_not_found

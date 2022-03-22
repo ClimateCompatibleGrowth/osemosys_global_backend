@@ -66,4 +66,62 @@ RSpec.describe 'Run queries' do
       expect(response.body).to include("Auto-generated config for run #{run.id}")
     end
   end
+
+  describe 'POST create' do
+    it 'creates a run when the params are valid' do
+      post '/runs',
+        as: :json,
+        params: {
+          node1: 'Node1',
+          node2: 'Node2',
+          capacity: 99,
+          start_year: 2019,
+          end_year: 2029,
+          resolution: {
+            day_parts: [
+              { id: 'Morning', start_hour: 0, end_hour: 12 },
+              { id: 'Night', start_hour: 12, end_hour: 24 },
+            ],
+            seasons: [
+              { id: 'Winter', months: [1, 2, 3, 4, 5, 6] },
+              { id: 'Summer', months: [7, 8, 9, 10, 11, 12] },
+            ],
+          },
+        }
+
+      expect(Run.count).to eq(1)
+      result = JSON.parse(response.body).symbolize_keys
+      expect(result).to include(
+        node1: 'Node1',
+        node2: 'Node2',
+        capacity: 99,
+        start_year: 2019,
+        end_year: 2029,
+        resolution: {
+          'day_parts' => [
+            { 'id' => 'Morning', 'start_hour' => 0, 'end_hour' => 12 },
+            { 'id' => 'Night', 'start_hour' => 12, 'end_hour' => 24 },
+          ],
+          'seasons' => [
+            { 'id' => 'Winter', 'months' => [1, 2, 3, 4, 5, 6] },
+            { 'id' => 'Summer', 'months' => [7, 8, 9, 10, 11, 12] },
+          ],
+        },
+        slug: match('node1-node2-99-2029'),
+      )
+    end
+
+    it 'returns an error message when the params are invalid' do
+      post '/runs', as: :json, params: {}
+
+      expect(Run.count).to eq(0)
+      expect(response.code).to eq('400')
+      result = JSON.parse(response.body).symbolize_keys
+      expect(result).to include(errors: match("Node1 can't be blank"))
+      expect(result).to include(errors: match("Node2 can't be blank"))
+      expect(result).to include(errors: match("Capacity can't be blank"))
+      expect(result).to include(errors: match("Start year can't be blank"))
+      expect(result).to include(errors: match("End year can't be blank"))
+    end
+  end
 end
