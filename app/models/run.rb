@@ -5,7 +5,7 @@ class Run < ApplicationRecord
   validate :enforce_season_format
   validate :enforce_day_parts_format
 
-  store :resolution, accessors: %i[day_parts seasons], coder: JSON
+  store_accessor :resolution, %i[day_parts seasons]
 
   private
 
