@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_19_183629) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_22_193950) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -57,8 +57,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_19_183629) do
   create_table "runs", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "node1", null: false
+    t.string "node2", null: false
+    t.integer "capacity", null: false
+    t.integer "start_year", null: false
+    t.integer "end_year", null: false
+    t.json "resolution", default: {}, null: false
+    t.string "email"
+    t.string "slug", null: false
+    t.index ["slug"], name: "index_runs_on_slug", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "ec2_instances", "runs"
 end
