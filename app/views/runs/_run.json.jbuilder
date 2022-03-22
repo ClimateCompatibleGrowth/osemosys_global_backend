@@ -1,1 +1,12 @@
-json.(run, :id, :created_at, :updated_at)
+json.(
+  run,
+  :id,
+  :node1,
+  :node2,
+  :capacity,
+  :start_year,
+  :end_year,
+  :resolution,
+  :slug,
+  :email,
+)
