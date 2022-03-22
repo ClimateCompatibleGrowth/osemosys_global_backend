@@ -60,7 +60,7 @@ RSpec.describe 'Run queries' do
 
       get "/runs/#{run.slug}.yml"
 
-      parsed_result = YAML.load(response.body).symbolize_keys
+      parsed_result = YAML.safe_load(response.body).symbolize_keys
       expect(response.body).to include("Auto-generated config for run #{run.id}")
       expect(parsed_result[:scenario]).to eq(run.slug)
       expect(parsed_result[:startYear]).to eq(run.start_year)
