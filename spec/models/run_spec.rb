@@ -11,6 +11,41 @@ RSpec.describe Run do
     end
   end
 
+  describe 'validations' do
+    it 'enforces correct seaons' do
+      run_with_malformed_seasons = build(
+        :run,
+        resolution: { seasons: 'something' },
+      )
+      run_with_missing_season_fields = build(
+        :run,
+        resolution: { seasons: [{ months: (1..12).to_a }] },
+      )
+      run_with_incomplete_coverage = build(
+        :run,
+        resolution: { seasons: [{ months: (1..11).to_a, id: 'year' }] },
+      )
+      valid_run = build(
+        :run,
+        resolution: { seasons: [{ months: (1..12).to_a, id: 'year' }] },
+      )
+
+      expect(run_with_malformed_seasons).to be_invalid
+      expect(run_with_malformed_seasons.errors[:resolution]).to include(
+        'Seasons are not in the correct format.',
+      )
+      expect(run_with_missing_season_fields).to be_invalid
+      expect(run_with_missing_season_fields.errors[:resolution]).to include(
+        'Seasons are not in the correct format.',
+      )
+      expect(run_with_incomplete_coverage).to be_invalid
+      expect(run_with_incomplete_coverage.errors[:resolution]).to include(
+        'Seasons are not in the correct format.',
+      )
+      expect(valid_run).to be_valid
+    end
+  end
+
   describe 'resolution' do
     it 'has helper methods for day_parts and seasons' do
       run = build(
