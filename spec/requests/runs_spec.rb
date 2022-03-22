@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Run management' do
   describe 'GET index' do
     it 'renders the last 10 runs' do
-      15.times { Run.create! }
+      create_list(:run, 15)
 
       get '/runs.json'
 
