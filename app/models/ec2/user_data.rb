@@ -19,6 +19,7 @@ module Ec2
 
         terminate_instance() {
           # Uncomment when going live
+          echo "Shutting down now"
           # sudo shutdown -h now
         }
 
@@ -43,7 +44,7 @@ module Ec2
       if Rails.env.development?
         'https://osemosys-global-backend.herokuapp.com/config.yaml'
       else
-        "https://osemosys-global-backend.herokuapp.com/runs/#{run.id}.yml"
+        "https://osemosys-global-backend.herokuapp.com/runs/#{run.slug}.yml"
       end
     end
   end
