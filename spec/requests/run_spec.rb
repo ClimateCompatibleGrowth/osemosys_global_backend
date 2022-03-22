@@ -60,8 +60,18 @@ RSpec.describe 'Run queries' do
 
       get "/runs/#{run.slug}.yml"
 
-      # result = YAML.load(response.body).symbolize_keys
+      parsed_result = YAML.load(response.body).symbolize_keys
       expect(response.body).to include("Auto-generated config for run #{run.id}")
+      expect(parsed_result[:scenario]).to eq(run.slug)
+      expect(parsed_result[:startYear]).to eq(run.start_year)
+      expect(parsed_result[:endYear]).to eq(run.end_year)
+      expect(parsed_result[:geographic_scope]).to eq([run.node1, run.node2])
+      expect(parsed_result[:dayparts].keys).to eq(run.day_parts.map { |day_part| day_part['id'] })
+      expect(parsed_result[:dayparts].values).to eq(
+        run.day_parts.map { |day_part| [day_part['start_hour'], day_part['end_hour']] },
+      )
+      expect(parsed_result[:seasons].keys).to eq(run.seasons.map { |season| season['id'] })
+      expect(parsed_result[:seasons].values).to eq(run.seasons.map { |season| season['months'] })
     end
   end
 

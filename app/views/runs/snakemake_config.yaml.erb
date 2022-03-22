@@ -7,27 +7,27 @@ modelName: 'OsemosysGlobal'
 region: 'GLOBAL'
 
 # Scenario Name
-scenario: 'aTestScenario'
+scenario: <%= @run.slug %>
 
 # Temporal Parameters
-startYear: 2015
-endYear: 2050
+startYear: <%= @run.start_year %>
+endYear: <%= @run.end_year %>
 daytype: False
 dayparts:
   #daypart : [start_hour (inclusive), end_hour (exclusive)]
-  D1: [0, 12]
-  D2: [12, 24]
+  <% @run.day_parts.each do |day_part| %>
+    <%= day_part['id'] %>: <%= [day_part['start_hour'], day_part['end_hour']] %>
+  <% end %>
 seasons:
   #season : [month 1, month 2, ...] (all inclusive)
-  S1: [12, 1, 2]
-  S2: [3, 4, 5]
-  S3: [6, 7, 8]
-  S4: [9, 10, 11]
+  <% @run.seasons.each do |season| %>
+    <%= season['id'] %>: <%= season['months'] %>
+  <% end %>
 
 # Spatial Parameters
 geographic_scope:
-  - 'IND'
-  - 'AFG'
+  - '<%= @run.node1 %>'
+  - '<%= @run.node2 %>'
 crossborderTrade: False
 
 # Emission Parameters
