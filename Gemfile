@@ -5,6 +5,7 @@ ruby '3.0.0'
 
 gem 'aws-sdk-ec2'
 gem 'bootsnap', require: false
+gem 'bugsnag'
 gem 'jbuilder'
 gem 'pg'
 gem 'puma'
