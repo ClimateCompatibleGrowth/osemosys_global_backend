@@ -9,6 +9,14 @@ RSpec.describe Run do
 
       expect(run.slug).to match('nd1-nd2-88-3000-')
     end
+
+    it 'does not override existing slugs' do
+      run = build(:run, slug: 'existing-slug')
+
+      run.validate
+
+      expect(run.slug).to eq('existing-slug')
+    end
   end
 
   describe 'validations' do

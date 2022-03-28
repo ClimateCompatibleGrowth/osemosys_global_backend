@@ -9,9 +9,13 @@ class Run < ApplicationRecord
 
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, allow_nil: true
 
+  has_one_attached :result_file
+
   private
 
   def generate_slug
+    return if slug.present?
+
     self.slug = [node1, node2, capacity, end_year, SecureRandom.hex(3)].join('-').parameterize
   end
 
