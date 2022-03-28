@@ -132,4 +132,44 @@ RSpec.describe 'Run queries' do
       expect(result).to include(errors: match("End year can't be blank"))
     end
   end
+
+  describe 'PUT update' do
+    it 'updates the run with the new attributes' do
+      run = create(:run, email: 'old-email@example.com')
+
+      put "/runs/#{run.slug}",
+        as: :json,
+        params: { email: 'new-email@example.com' }
+
+      run.reload
+      expect(run.email).to eq('new-email@example.com')
+      result = JSON.parse(response.body).symbolize_keys
+      expect(result).to include(email: 'new-email@example.com')
+    end
+
+    it 'returns an error message when the run slug is invalid' do
+      post '/runs', as: :json, params: {}
+
+      put '/runs/invalid',
+        as: :json,
+        params: { email: 'new-email@example.com' }
+
+      expect(Run.count).to eq(0)
+      expect(response.code).to eq('404')
+      result = JSON.parse(response.body).symbolize_keys
+      expect(result).to eq(error: 'No run with that slug found.')
+    end
+
+    it 'returns an error message when the email is invalid' do
+      run = create(:run, email: 'old-email@example.com')
+
+      put "/runs/#{run.slug}",
+        as: :json,
+        params: { email: 'invalid' }
+
+      expect(response.code).to eq('400')
+      result = JSON.parse(response.body).symbolize_keys
+      expect(result).to include(errors: match('Email is invalid'))
+    end
+  end
 end

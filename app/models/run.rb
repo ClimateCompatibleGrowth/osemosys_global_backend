@@ -7,6 +7,8 @@ class Run < ApplicationRecord
 
   store_accessor :resolution, %i[day_parts seasons]
 
+  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, allow_nil: true
+
   private
 
   def generate_slug
