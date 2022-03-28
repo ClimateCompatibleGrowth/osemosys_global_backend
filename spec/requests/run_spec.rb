@@ -20,6 +20,7 @@ RSpec.describe 'Run queries' do
             { id: 'Summer', months: [7, 8, 9, 10, 11, 12] },
           ],
         },
+        geographic_scope: %w[AFR EUR],
       )
 
       get "/runs/#{run.slug}.json"
@@ -41,6 +42,7 @@ RSpec.describe 'Run queries' do
           { 'id' => 'Summer', 'months' => [7, 8, 9, 10, 11, 12] },
         ],
       )
+      expect(result[:geographic_scope]).to eq(%w[AFR EUR])
     end
 
     it 'renders a 404 if the run is not found' do
@@ -95,6 +97,7 @@ RSpec.describe 'Run queries' do
               { id: 'Summer', months: [7, 8, 9, 10, 11, 12] },
             ],
           },
+          geographic_scope: %w[AFR EUR],
         }
 
       expect(Run.count).to eq(1)
@@ -116,6 +119,7 @@ RSpec.describe 'Run queries' do
           ],
         },
         slug: match('node1-node2-99-2029'),
+        geographic_scope: %w[AFR EUR],
       )
     end
 

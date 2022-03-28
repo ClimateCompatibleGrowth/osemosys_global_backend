@@ -9,4 +9,5 @@ json.(
   :resolution,
   :slug,
   :email,
+  :geographic_scope,
 )

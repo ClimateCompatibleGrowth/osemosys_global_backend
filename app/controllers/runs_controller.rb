@@ -38,7 +38,15 @@ class RunsController < ApplicationController
   private
 
   def create_run_params
-    params.permit(:node1, :node2, :capacity, :start_year, :end_year, resolution: {})
+    params.permit(
+      :node1,
+      :node2,
+      :capacity,
+      :start_year,
+      :end_year,
+      resolution: {},
+      geographic_scope: [],
+    )
   end
 
   def update_run_params
