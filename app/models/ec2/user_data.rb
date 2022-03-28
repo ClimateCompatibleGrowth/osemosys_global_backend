@@ -1,5 +1,7 @@
 module Ec2
   class UserData
+    SCRIPT_URL = 'https://raw.githubusercontent.com/ClimateCompatibleGrowth/osemosys_global_backend/master/public/run_workflow.sh'.freeze
+
     def initialize(run:)
       @run = run
     end
@@ -33,10 +35,7 @@ module Ec2
 
     def solve_run_command
       <<~BASH.squish
-        cd /home/ubuntu/osemosys_global/
-        && wget --output-document=/home/ubuntu/osemosys_global/config/config.yaml #{config_file_url}
-        && source /home/ubuntu/miniconda3/bin/activate osemosys-global
-        && snakemake -c
+        curl #{SCRIPT_URL} | bash -s -- #{config_file_url}
       BASH
     end
 
