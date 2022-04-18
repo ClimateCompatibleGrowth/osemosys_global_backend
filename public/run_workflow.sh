@@ -33,7 +33,7 @@ timeout 1h snakemake -c
 # Upload results
 scenario_name=$(yq '.scenario' $config_file_path)
 user_defined_capacity=$(yq '.user_defined_capacity' $config_file_path)
-slug=$(yq '.slug' $config_file_path)
+run_slug=$(yq '.slug' $config_file_path)
 
 if [ "$user_defined_capacity" == 'null' ]; then
   interconnector_enabled=false
