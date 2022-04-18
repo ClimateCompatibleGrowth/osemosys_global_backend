@@ -17,19 +17,19 @@ daytype: False
 dayparts:
   #daypart : [start_hour (inclusive), end_hour (exclusive)]
   <% @run.day_parts.each do |day_part| %>
-    <%= day_part['id'] %>: <%= [day_part['start_hour'], day_part['end_hour']] %>
+  <%= day_part['id'] %>: <%= [day_part['start_hour'], day_part['end_hour']] %>
   <% end %>
 
 seasons:
   #season : [month 1, month 2, ...] (all inclusive)
   <% @run.seasons.each do |season| %>
-    <%= season['id'] %>: <%= season['months'] %>
+  <%= season['id'] %>: <%= season['months'] %>
   <% end %>
 
 # Spatial Parameters
 geographic_scope:
   <% @run.geographic_scope.each do |scope_slug| %>
-    - '<%= scope_slug %>'
+  - '<%= scope_slug %>'
   <% end %>
 
 crossborderTrade: True
