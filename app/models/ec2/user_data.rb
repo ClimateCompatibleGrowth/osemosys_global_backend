@@ -1,6 +1,6 @@
 module Ec2
   class UserData
-    SCRIPT_URL = 'https://raw.githubusercontent.com/ClimateCompatibleGrowth/osemosys_global_backend/master/public/run_workflow.sh'.freeze
+    SCRIPT_URL = 'https://osemosys-global-backend.herokuapp.com/run_workflow.sh'.freeze
 
     def initialize(run:)
       @run = run
