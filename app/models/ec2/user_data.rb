@@ -37,7 +37,7 @@ module Ec2
 
     def solve_run_command
       <<~BASH.squish
-        curl #{SCRIPT_URL} | bash -s -- #{config_file_url}
+        curl #{SCRIPT_URL} | bash -s -- "#{config_file_url}"
       BASH
     end
 
