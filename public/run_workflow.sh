@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Verbose for debugging
+set -x
+
 if [ "$#" -ne 1 ]; then
   echo "Illegal number of parameters"
   exit
@@ -18,7 +21,7 @@ git reset --hard 70f7f5cd7
 
 wget --output-document=/home/ubuntu/osemosys_global/config/config.yaml $config_file_url
 source /home/ubuntu/miniconda3/bin/activate osemosys-global
-snakemake -c
+timeout 1h snakemake -c
 # curl --request PUT \
 #   --url http://localhost:3000/runs/[slug] \
 #   --form 'result_file=@/home/ubuntu/osemosys_global/config/config.yaml'
