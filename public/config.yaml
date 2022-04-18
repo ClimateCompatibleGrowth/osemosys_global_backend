@@ -1,11 +1,11 @@
 # High Level Configuration
 inputDir: 'resources'
 outputDir: 'results'
-modelName: 'OsemosysGlobal'
+modelName: 'BBIN'
 region: 'GLOBAL'
 
 # Scenario Name
-scenario: 'aTestScenario'
+scenario: 'no_tax'
 
 # Temporal Parameters
 startYear: 2015
@@ -13,23 +13,38 @@ endYear: 2050
 daytype: False
 dayparts:
   #daypart : [start_hour (inclusive), end_hour (exclusive)]
-  D1: [0, 12]
-  D2: [12, 24]
+  D1: [0, 6]
+  D2: [6, 12]
+  D3: [12, 18]
+  D4: [18, 24]
+
 seasons:
   #season : [month 1, month 2, ...] (all inclusive)
-  S1: [12, 1, 2]
-  S2: [3, 4, 5]
-  S3: [6, 7, 8]
-  S4: [9, 10, 11]
+  S1: [1, 2, 3,]
+  S2: [4, 5, 6]
+  S3: [7, 8, 9]
+  S4: [10, 11, 12]
 
 # Spatial Parameters
 geographic_scope:
   - 'IND'
-  - 'AFG'
-crossborderTrade: False
+
+crossborderTrade: True
 
 # Emission Parameters
-emission_penalty: 50 # M$/MT CO2
+emission_penalty: 100 # M$/MT CO2
+
+# Investment Parameters
+no_invest_technologies:
+  - 'GEO'
+  - 'CSP'
+  - 'WAV'
+  - 'BIO'
+  - 'URN'
 
 # Result Parameters
 results_by_country: True
+
+user_defined_capacity:
+  #technology: [capacity, first_year, lifetime]
+  TRNINDEAINDSO: [3, 2027, 50]

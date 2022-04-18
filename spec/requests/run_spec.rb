@@ -67,7 +67,8 @@ RSpec.describe 'Run queries' do
       expect(parsed_result[:scenario]).to eq(run.slug)
       expect(parsed_result[:startYear]).to eq(run.start_year)
       expect(parsed_result[:endYear]).to eq(run.end_year)
-      expect(parsed_result[:geographic_scope]).to eq([run.node1, run.node2])
+      expect(parsed_result[:unused_nodes]).to eq([run.node1, run.node2])
+      expect(parsed_result[:geographic_scope]).to eq(['IND'])
       expect(parsed_result[:dayparts].keys).to eq(run.day_parts.map { |day_part| day_part['id'] })
       expect(parsed_result[:dayparts].values).to eq(
         run.day_parts.map { |day_part| [day_part['start_hour'], day_part['end_hour']] },

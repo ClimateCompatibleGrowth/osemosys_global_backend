@@ -18,5 +18,6 @@ FactoryBot.define do
         ],
       }
     end
+    geographic_scope { %i[IND] }
   end
 end
