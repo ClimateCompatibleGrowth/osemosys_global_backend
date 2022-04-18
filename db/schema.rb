@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_28_184642) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_18_162135) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -66,6 +66,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_184642) do
     t.string "email"
     t.string "slug", null: false
     t.string "geographic_scope", default: [], null: false, array: true
+    t.string "status", default: "pending", null: false
     t.index ["slug"], name: "index_runs_on_slug", unique: true
   end
 

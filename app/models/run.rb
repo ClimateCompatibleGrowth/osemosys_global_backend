@@ -18,6 +18,13 @@ class Run < ApplicationRecord
   has_one_attached :trade_flows_with_interconnector
   has_one_attached :trade_flows_without_interconnector
 
+  enum status: {
+    pending: 'pending',
+    ongoing: 'ongoing',
+    succeeded: 'succeeded',
+    failed: 'failed',
+  }
+
   def lifetime
     end_year - start_year
   end
