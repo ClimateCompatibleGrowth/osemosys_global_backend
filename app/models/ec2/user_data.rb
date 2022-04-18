@@ -45,7 +45,7 @@ module Ec2
       if Rails.env.development?
         'https://osemosys-global-backend.herokuapp.com/config.yaml'
       else
-        "https://osemosys-global-backend.herokuapp.com/runs/#{run.slug}.yml&disable_interconnector=#{disable_interconnector}"
+        "https://osemosys-global-backend.herokuapp.com/runs/#{run.slug}.yml?disable_interconnector=#{disable_interconnector}"
       end
     end
   end
