@@ -11,7 +11,7 @@ class RunsController < ApplicationController
 
     render_not_found and return unless @run
 
-    @disable_interconnector = params[:disable_interconnector].present?
+    @disable_interconnector = params[:disable_interconnector] == 'true'
     respond_to do |format|
       format.json
       format.yaml { render 'snakemake_config' }

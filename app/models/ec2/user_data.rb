@@ -2,8 +2,9 @@ module Ec2
   class UserData
     SCRIPT_URL = 'https://osemosys-global-backend.herokuapp.com/run_workflow.sh'.freeze
 
-    def initialize(run:)
+    def initialize(run:, disable_interconnector: false)
       @run = run
+      @disable_interconnector = disable_interconnector
     end
 
     def to_base64_encoded
@@ -12,7 +13,7 @@ module Ec2
 
     private
 
-    attr_reader :run
+    attr_reader :run, :disable_interconnector
 
     def user_data
       <<~BASH
@@ -44,7 +45,7 @@ module Ec2
       if Rails.env.development?
         'https://osemosys-global-backend.herokuapp.com/config.yaml'
       else
-        "https://osemosys-global-backend.herokuapp.com/runs/#{run.slug}.yml"
+        "https://osemosys-global-backend.herokuapp.com/runs/#{run.slug}.yml&disable_interconnector=#{disable_interconnector}"
       end
     end
   end

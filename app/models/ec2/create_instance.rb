@@ -4,8 +4,9 @@ module Ec2
       new(...).call
     end
 
-    def initialize(run: nil, instance_type: 't2.micro')
+    def initialize(run: nil, disable_interconnector: false, instance_type: 't2.micro')
       @run = run
+      @disable_interconnector = disable_interconnector
       @instance_type = instance_type
     end
 
@@ -32,10 +33,11 @@ module Ec2
       InstanceParams.new(
         instance_type: instance_type,
         run: run,
+        disable_interconnector: disable_interconnector,
       ).to_h
     end
 
-    attr_reader :run, :instance_type
+    attr_reader :run, :instance_type, :disable_interconnector
 
     def spawn_instance
       @instances = resource.create_instances(instance_params)

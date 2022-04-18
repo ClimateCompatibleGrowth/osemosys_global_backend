@@ -1,8 +1,9 @@
 module Ec2
   class InstanceParams
-    def initialize(instance_type:, run:)
+    def initialize(instance_type:, disable_interconnector:, run:)
       @instance_type = instance_type
       @run = run
+      @disable_interconnector = disable_interconnector
     end
 
     def to_h
@@ -23,10 +24,10 @@ module Ec2
 
     private
 
-    attr_reader :instance_type, :run
+    attr_reader :instance_type, :run, :disable_interconnector
 
     def encoded_user_data
-      UserData.new(run: run).to_base64_encoded
+      UserData.new(run: run, disable_interconnector: disable_interconnector).to_base64_encoded
     end
   end
 end
