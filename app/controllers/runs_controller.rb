@@ -50,7 +50,18 @@ class RunsController < ApplicationController
   end
 
   def update_run_params
-    params.permit(:email, :log_file)
+    params.permit(
+      :email,
+      :log_file,
+      :capacities_with_interconnector,
+      :capacities_without_interconnector,
+      :generation_with_interconnector,
+      :generation_without_interconnector,
+      :metrics_with_interconnector,
+      :metrics_without_interconnector,
+      :trade_flows_with_interconnector,
+      :trade_flows_without_interconnector,
+    )
   end
 
   def render_not_found
