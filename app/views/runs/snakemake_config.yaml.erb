@@ -32,10 +32,6 @@ geographic_scope:
     - '<%= scope_slug %>'
   <% end %>
 
-unused_nodes:
-  - '<%= @run.node1 %>'
-  - '<%= @run.node2 %>'
-
 crossborderTrade: True
 
 # Emission Parameters
@@ -52,6 +48,8 @@ no_invest_technologies:
 # Result Parameters
 results_by_country: True
 
+<% if !@disable_interconnector %>
 user_defined_capacity:
   #technology: [capacity, first_year, lifetime]
   <%= @run.user_defined_technology_name %>: [<%= @run.capacity %>, <%= @run.start_year %>, <%= @run.lifetime %>]
+<% end %>

@@ -64,7 +64,7 @@ RSpec.describe 'Run queries' do
   end
 
   describe 'GET show in yaml' do
-    it 'renders the run' do
+    it 'renders the run with the interconnector' do
       run = create(:run)
 
       get "/runs/#{run.slug}.yml"
@@ -75,7 +75,6 @@ RSpec.describe 'Run queries' do
       expect(parsed_result[:startYear]).to eq(run.start_year)
       expect(parsed_result[:slug]).to eq(run.slug)
       expect(parsed_result[:endYear]).to eq(run.end_year)
-      expect(parsed_result[:unused_nodes]).to eq([run.node1, run.node2])
       expect(parsed_result[:geographic_scope]).to eq(['IND'])
       expect(parsed_result[:user_defined_capacity].keys.first).to eq("TRN#{run.node1}#{run.node2}")
       expect(parsed_result[:user_defined_capacity].values.first).to eq(
@@ -87,6 +86,15 @@ RSpec.describe 'Run queries' do
       )
       expect(parsed_result[:seasons].keys).to eq(run.seasons.map { |season| season['id'] })
       expect(parsed_result[:seasons].values).to eq(run.seasons.map { |season| season['months'] })
+    end
+
+    it 'renders the run without the interconnector when disabled' do
+      run = create(:run)
+
+      get "/runs/#{run.slug}.yml?disable_interconnector=true"
+
+      parsed_result = YAML.safe_load(response.body).symbolize_keys
+      expect(parsed_result[:user_defined_capacity]).to be(nil)
     end
   end
 
