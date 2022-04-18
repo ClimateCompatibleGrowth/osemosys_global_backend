@@ -21,9 +21,8 @@ module Ec2
         set -e
 
         terminate_instance() {
-          # Uncomment when going live
-          echo "Shutting down now"
-          # sudo shutdown -h now
+          echo "Terminating instance now..."
+          #{'sudo shutdown -h now' if shutdown_on_finish?}
         }
 
         trap "terminate_instance" ERR
@@ -47,6 +46,10 @@ module Ec2
       else
         "https://osemosys-global-backend.herokuapp.com/runs/#{run.slug}.yml?disable_interconnector=#{disable_interconnector}"
       end
+    end
+
+    def shutdown_on_finish?
+      ENV['DISABLE_SHUTDOWN_ON_FINISH'] != 'true'
     end
   end
 end
