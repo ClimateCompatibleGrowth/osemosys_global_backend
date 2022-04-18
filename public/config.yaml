@@ -3,6 +3,7 @@ inputDir: 'resources'
 outputDir: 'results'
 modelName: 'BBIN'
 region: 'GLOBAL'
+slug: 'node1-node2-99-2029-584546' # run id: 2
 
 # Scenario Name
 scenario: 'no_tax'

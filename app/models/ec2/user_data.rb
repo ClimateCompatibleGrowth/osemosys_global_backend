@@ -27,6 +27,7 @@ module Ec2
 
         trap "terminate_instance" ERR
 
+        snap install yq
         su - ubuntu -c '#{solve_run_command}'
 
         terminate_instance

@@ -66,6 +66,7 @@ RSpec.describe 'Run queries' do
       expect(response.body).to include("Auto-generated config for run #{run.id}")
       expect(parsed_result[:scenario]).to eq(run.slug)
       expect(parsed_result[:startYear]).to eq(run.start_year)
+      expect(parsed_result[:slug]).to eq(run.slug)
       expect(parsed_result[:endYear]).to eq(run.end_year)
       expect(parsed_result[:unused_nodes]).to eq([run.node1, run.node2])
       expect(parsed_result[:geographic_scope]).to eq(['IND'])
