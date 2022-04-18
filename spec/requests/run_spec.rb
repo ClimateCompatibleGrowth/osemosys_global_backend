@@ -47,6 +47,7 @@ RSpec.describe 'Run queries' do
         ],
       )
       expect(result[:geographic_scope]).to eq(%w[AFR EUR])
+      expect(result[:status]).to eq('pending')
       expect(result.dig(:results, 'with_interconnector', 'capacities')).to be_present
       expect(result.dig(:results, 'without_interconnector', 'capacities')).not_to be_present
     end
