@@ -22,6 +22,10 @@ RSpec.describe 'Run queries' do
         },
         geographic_scope: %w[AFR EUR],
       )
+      run.capacities_with_interconnector.attach(
+        io: File.open(Rails.root.join('spec/fixtures/test_result.csv')),
+        filename: 'test.csv',
+      )
 
       get "/runs/#{run.slug}.json"
 
@@ -43,6 +47,8 @@ RSpec.describe 'Run queries' do
         ],
       )
       expect(result[:geographic_scope]).to eq(%w[AFR EUR])
+      expect(result.dig(:results, 'with_interconnector', 'capacities')).to be_present
+      expect(result.dig(:results, 'without_interconnector', 'capacities')).not_to be_present
     end
 
     it 'renders a 404 if the run is not found' do

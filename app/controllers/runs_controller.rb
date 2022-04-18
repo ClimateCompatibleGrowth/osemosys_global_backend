@@ -1,4 +1,7 @@
 class RunsController < ApplicationController
+  include ActionController::Helpers
+  helper AttachmentUrlHelpers
+
   def index
     @runs = Run.order(id: :desc).limit(10)
   end
