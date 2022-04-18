@@ -1,5 +1,6 @@
 class Run < ApplicationRecord
   before_validation :generate_slug
+  after_commit :enqueue_solve_run, on: :create
 
   validates :node1, :node2, :capacity, :start_year, :end_year, :slug, presence: true
   validate :enforce_season_format
@@ -59,5 +60,9 @@ class Run < ApplicationRecord
 
   def valid_day_part?(day_part)
     day_part.keys.map(&:to_s).sort == %w[end_hour id start_hour]
+  end
+
+  def enqueue_solve_run
+    SolveRunOnEc2.perform_async(id)
   end
 end
