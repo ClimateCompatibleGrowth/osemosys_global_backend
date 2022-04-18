@@ -53,4 +53,4 @@ results_by_country: True
 
 user_defined_capacity:
   #technology: [capacity, first_year, lifetime]
-  TRNINDEAINDSO: [3, 2027, 50]
+  <%= @run.user_defined_technology_name %>: [<%= @run.capacity %>, <%= @run.start_year %>, <%= @run.lifetime %>]

@@ -11,6 +11,14 @@ class Run < ApplicationRecord
 
   has_one_attached :result_file
 
+  def lifetime
+    end_year - start_year
+  end
+
+  def user_defined_technology_name
+    "TRN#{node1}#{node2}"
+  end
+
   private
 
   def generate_slug

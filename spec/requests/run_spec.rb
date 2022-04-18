@@ -69,6 +69,10 @@ RSpec.describe 'Run queries' do
       expect(parsed_result[:endYear]).to eq(run.end_year)
       expect(parsed_result[:unused_nodes]).to eq([run.node1, run.node2])
       expect(parsed_result[:geographic_scope]).to eq(['IND'])
+      expect(parsed_result[:user_defined_capacity].keys.first).to eq("TRN#{run.node1}#{run.node2}")
+      expect(parsed_result[:user_defined_capacity].values.first).to eq(
+        [run.capacity, run.start_year, run.lifetime],
+      )
       expect(parsed_result[:dayparts].keys).to eq(run.day_parts.map { |day_part| day_part['id'] })
       expect(parsed_result[:dayparts].values).to eq(
         run.day_parts.map { |day_part| [day_part['start_hour'], day_part['end_hour']] },
