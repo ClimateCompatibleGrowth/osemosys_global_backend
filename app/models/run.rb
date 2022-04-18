@@ -9,7 +9,7 @@ class Run < ApplicationRecord
 
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, allow_nil: true
 
-  has_one_attached :result_file
+  has_one_attached :log_file
 
   def lifetime
     end_year - start_year

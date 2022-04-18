@@ -50,7 +50,7 @@ class RunsController < ApplicationController
   end
 
   def update_run_params
-    params.permit(:email, :result_file)
+    params.permit(:email, :log_file)
   end
 
   def render_not_found
