@@ -5,6 +5,7 @@ class SolveRunOnEc2
     return unless enabled?
 
     run = Run.find(run_id)
+    run.ongoing!
     Ec2::CreateInstance.call(run: run, disable_interconnector: true, instance_type: 'c6i.large')
     Ec2::CreateInstance.call(run: run, disable_interconnector: false, instance_type: 'c6i.large')
   end
