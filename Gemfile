@@ -12,6 +12,7 @@ gem 'pg'
 gem 'puma'
 gem 'rack-cors'
 gem 'rails', '~> 7.0.1'
+gem 'sidekiq'
 
 group :development do
   gem 'pry'
