@@ -1,9 +1,22 @@
 #!/bin/bash
 set -e
 
+if [ "$#" -ne 1 ]; then
+  echo "Illegal number of parameters"
+  exit
+fi
+config_file_url=$1
+
 cd /home/ubuntu/osemosys_global/
-# To do: name argument something else than $1
-wget --output-document=/home/ubuntu/osemosys_global/config/config.yaml $1
+
+# Pin the version
+git reset --hard && git pull
+git reset --hard 70f7f5cd7
+
+# Update conda environment
+# conda env update -f workflow/envs/osemosys-global.yaml 
+
+wget --output-document=/home/ubuntu/osemosys_global/config/config.yaml $config_file_url
 source /home/ubuntu/miniconda3/bin/activate osemosys-global
 snakemake -c
 # curl --request PUT \
