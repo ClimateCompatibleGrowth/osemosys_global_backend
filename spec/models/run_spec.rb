@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Run do
   describe 'before_validation callbacks' do
     it 'generates a slug' do
-      run = build(:run, node1: 'ND1', node2: 'ND2', capacity: '88', end_year: 3000)
+      run = build(:run, interconnector_nodes: %w[ND1 ND2], capacity: '88', end_year: 3000)
 
       run.validate
 

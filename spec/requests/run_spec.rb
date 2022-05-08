@@ -5,8 +5,7 @@ RSpec.describe 'Run queries' do
     it 'renders the run' do
       run = create(
         :run,
-        node1: 'Node1',
-        node2: 'Node2',
+        interconnector_nodes: %w[Node1 Node2],
         capacity: 99,
         start_year: 2019,
         end_year: 2029,
@@ -31,8 +30,7 @@ RSpec.describe 'Run queries' do
 
       result = JSON.parse(response.body).symbolize_keys
       expect(result[:id]).to eq(run.id)
-      expect(result[:node1]).to eq('Node1')
-      expect(result[:node2]).to eq('Node2')
+      expect(result[:interconnector_nodes]).to eq(%w[Node1 Node2])
       expect(result[:capacity]).to eq(99)
       expect(result[:start_year]).to eq(2019)
       expect(result[:end_year]).to eq(2029)
@@ -65,7 +63,7 @@ RSpec.describe 'Run queries' do
 
   describe 'GET show in yaml' do
     it 'renders the run with the interconnector' do
-      run = create(:run)
+      run = create(:run, interconnector_nodes: %w[Node1 Node2])
 
       get "/runs/#{run.slug}.yml"
 
@@ -76,7 +74,7 @@ RSpec.describe 'Run queries' do
       expect(parsed_result[:slug]).to eq(run.slug)
       expect(parsed_result[:endYear]).to eq(run.end_year)
       expect(parsed_result[:geographic_scope]).to eq(['IND'])
-      expect(parsed_result[:user_defined_capacity].keys.first).to eq("TRN#{run.node1}#{run.node2}")
+      expect(parsed_result[:user_defined_capacity].keys.first).to eq('TRNNode1Node2')
       expect(parsed_result[:user_defined_capacity].values.first).to eq(
         [run.capacity, run.start_year, run.lifetime],
       )
@@ -112,8 +110,7 @@ RSpec.describe 'Run queries' do
       post '/runs',
         as: :json,
         params: {
-          node1: 'Node1',
-          node2: 'Node2',
+          interconnector_nodes: %w[Node1 Node2],
           capacity: 99,
           start_year: 2019,
           end_year: 2029,
@@ -133,8 +130,7 @@ RSpec.describe 'Run queries' do
       expect(Run.count).to eq(1)
       result = JSON.parse(response.body).symbolize_keys
       expect(result).to include(
-        node1: 'Node1',
-        node2: 'Node2',
+        interconnector_nodes: %w[Node1 Node2],
         capacity: 99,
         start_year: 2019,
         end_year: 2029,
@@ -159,8 +155,7 @@ RSpec.describe 'Run queries' do
       expect(Run.count).to eq(0)
       expect(response.code).to eq('400')
       result = JSON.parse(response.body).symbolize_keys
-      expect(result).to include(errors: match("Node1 can't be blank"))
-      expect(result).to include(errors: match("Node2 can't be blank"))
+      expect(result).to include(errors: match("Interconnector nodes can't be blank"))
       expect(result).to include(errors: match("Capacity can't be blank"))
       expect(result).to include(errors: match("Start year can't be blank"))
       expect(result).to include(errors: match("End year can't be blank"))

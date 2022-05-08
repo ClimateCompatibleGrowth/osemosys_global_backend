@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_18_162135) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_08_130937) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -57,8 +57,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_18_162135) do
   create_table "runs", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "node1", null: false
-    t.string "node2", null: false
+    t.string "node1"
+    t.string "node2"
     t.integer "capacity", null: false
     t.integer "start_year", null: false
     t.integer "end_year", null: false
@@ -67,6 +67,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_18_162135) do
     t.string "slug", null: false
     t.string "geographic_scope", default: [], null: false, array: true
     t.string "status", default: "pending", null: false
+    t.string "interconnector_nodes", default: [], null: false, array: true
     t.index ["slug"], name: "index_runs_on_slug", unique: true
   end
 

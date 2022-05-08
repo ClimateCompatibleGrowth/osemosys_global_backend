@@ -2,7 +2,7 @@ class Run < ApplicationRecord
   before_validation :generate_slug
   after_commit :enqueue_solve_run, on: :create
 
-  validates :node1, :node2, :capacity, :start_year, :end_year, :slug, presence: true
+  validates :interconnector_nodes, :capacity, :start_year, :end_year, :slug, presence: true
   validate :enforce_season_format
   validate :enforce_day_parts_format
 
@@ -31,7 +31,7 @@ class Run < ApplicationRecord
   end
 
   def user_defined_technology_name
-    "TRN#{node1}#{node2}"
+    "TRN#{interconnector_nodes.join}"
   end
 
   private
@@ -39,7 +39,12 @@ class Run < ApplicationRecord
   def generate_slug
     return if slug.present?
 
-    self.slug = [node1, node2, capacity, end_year, SecureRandom.hex(3)].join('-').parameterize
+    self.slug = [
+      *interconnector_nodes,
+      capacity,
+      end_year,
+      SecureRandom.hex(3),
+    ].join('-').parameterize
   end
 
   def enforce_day_parts_format

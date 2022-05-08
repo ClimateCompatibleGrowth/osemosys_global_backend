@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :run do
-    node1 { 'AF-AGO' }
-    node2 { 'AF-BDI' }
+    interconnector_nodes { %w[AF-AGO AF-BDI] }
     capacity { 10 }
     start_year { 2020 }
     end_year { 2050 }

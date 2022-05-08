@@ -43,13 +43,12 @@ class RunsController < ApplicationController
 
   def create_run_params
     params.permit(
-      :node1,
-      :node2,
       :capacity,
       :start_year,
       :end_year,
       resolution: {},
       geographic_scope: [],
+      interconnector_nodes: [],
     )
   end
 

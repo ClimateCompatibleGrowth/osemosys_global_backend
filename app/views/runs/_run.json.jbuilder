@@ -1,8 +1,7 @@
 json.(
   run,
   :id,
-  :node1,
-  :node2,
+  :interconnector_nodes,
   :capacity,
   :start_year,
   :end_year,
