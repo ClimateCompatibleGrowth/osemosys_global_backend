@@ -3,7 +3,8 @@ class RunsController < ApplicationController
   helper AttachmentUrlHelpers
 
   def index
-    @runs = Run.order(id: :desc).limit(10)
+    page_size = params[:limit] || 10
+    @runs = Run.order(id: :desc).limit(page_size)
   end
 
   def show
