@@ -1,14 +1,8 @@
 # Auto-generated config for run <%= @run.id %>
 
-# High Level Configuration
-inputDir: 'resources'
-outputDir: 'results'
-modelName: 'BBIN'
-region: 'GLOBAL'
-slug: '<%= @run.slug %>'
-
 # Scenario Name
 scenario: <%= @run.slug %>
+slug: '<%= @run.slug %>'
 
 # Temporal Parameters
 startYear: <%= @run.start_year %>
@@ -19,12 +13,12 @@ dayparts:
   <% @run.day_parts.each do |day_part| %>
   <%= day_part['id'] %>: <%= [day_part['start_hour'], day_part['end_hour']] %>
   <% end %>
-
 seasons:
   #season : [month 1, month 2, ...] (all inclusive)
   <% @run.seasons.each do |season| %>
   <%= season['id'] %>: <%= season['months'] %>
   <% end %>
+timeshift: 0 # value between -11 and 12
 
 # Spatial Parameters
 geographic_scope:
@@ -47,6 +41,9 @@ no_invest_technologies:
 
 # Result Parameters
 results_by_country: True
+
+# solver parameters
+solver: 'cbc' # cbc, cplex, gurobi
 
 user_defined_capacity:
   #technology: [capacity, first_year]

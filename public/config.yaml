@@ -1,12 +1,6 @@
-# High Level Configuration
-inputDir: 'resources'
-outputDir: 'results'
-modelName: 'BBIN'
-region: 'GLOBAL'
-slug: 'node1-node2-99-2029-584546' # run id: 2
-
 # Scenario Name
 scenario: 'no_tax'
+slug: 'node1-node2-99-2029-584546' # run id: 2
 
 # Temporal Parameters
 startYear: 2015
@@ -18,13 +12,13 @@ dayparts:
   D2: [6, 12]
   D3: [12, 18]
   D4: [18, 24]
-
 seasons:
   #season : [month 1, month 2, ...] (all inclusive)
   S1: [1, 2, 3,]
   S2: [4, 5, 6]
   S3: [7, 8, 9]
   S4: [10, 11, 12]
+timeshift: 0 # value between -11 and 12
 
 # Spatial Parameters
 geographic_scope:
@@ -46,6 +40,9 @@ no_invest_technologies:
 # Result Parameters
 results_by_country: True
 
+# solver parameters
+solver: 'cbc' # cbc, cplex, gurobi
+
 user_defined_capacity:
   #technology: [capacity, first_year]
-  TRNINDEAINDSO: [3, 2027, 50]
+  TRNINDEAINDSO: [3, 2027]
