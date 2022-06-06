@@ -26,10 +26,6 @@ class Run < ApplicationRecord
     failed: 'failed',
   }
 
-  def lifetime
-    end_year - start_year
-  end
-
   def user_defined_technology_name
     "TRN#{interconnector_nodes.join}"
   end

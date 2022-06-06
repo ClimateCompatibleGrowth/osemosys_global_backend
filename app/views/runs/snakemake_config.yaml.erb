@@ -49,7 +49,7 @@ no_invest_technologies:
 results_by_country: True
 
 user_defined_capacity:
+  #technology: [capacity, first_year]
 <% if !@disable_interconnector %>
-  #technology: [capacity, first_year, lifetime]
-  <%= @run.user_defined_technology_name %>: [<%= @run.capacity %>, <%= @run.start_year %>, <%= @run.lifetime %>]
+  <%= @run.user_defined_technology_name %>: [<%= @run.capacity %>, <%= @run.start_year %>]
 <% end %>

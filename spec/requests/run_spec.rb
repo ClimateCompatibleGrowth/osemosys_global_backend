@@ -76,7 +76,7 @@ RSpec.describe 'Run queries' do
       expect(parsed_result[:geographic_scope]).to eq(['IND'])
       expect(parsed_result[:user_defined_capacity].keys.first).to eq('TRNNode1Node2')
       expect(parsed_result[:user_defined_capacity].values.first).to eq(
-        [run.capacity, run.start_year, run.lifetime],
+        [run.capacity, run.start_year],
       )
       expect(parsed_result[:dayparts].keys).to eq(run.day_parts.map { |day_part| day_part['id'] })
       expect(parsed_result[:dayparts].values).to eq(

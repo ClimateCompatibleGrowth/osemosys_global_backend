@@ -47,5 +47,5 @@ no_invest_technologies:
 results_by_country: True
 
 user_defined_capacity:
-  #technology: [capacity, first_year, lifetime]
+  #technology: [capacity, first_year]
   TRNINDEAINDSO: [3, 2027, 50]
