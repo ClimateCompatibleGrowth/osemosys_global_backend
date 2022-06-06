@@ -63,7 +63,7 @@ RSpec.describe 'Run queries' do
 
   describe 'GET show in yaml' do
     it 'renders the run with the interconnector' do
-      run = create(:run, interconnector_nodes: %w[Node1 Node2])
+      run = create(:run, interconnector_nodes: %w[US-Node1 US-Node2])
 
       get "/runs/#{run.slug}.yml"
 
