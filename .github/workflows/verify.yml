@@ -4,6 +4,7 @@ on: [push]
 env:
   DATABASE_URL: "postgres://pguser:password@localhost:5432/osemosys_global_backend_test"
   RAILS_ENV: test
+  REDIS_URL: redis://localhost:6379/0
 
 jobs:
   tests:
@@ -19,12 +20,9 @@ jobs:
         ports: ["5432:5432"]
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
       redis:
-        image: redis
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+        image: redis:alpine
+        ports: ["6379:6379"]
+        options: --entrypoint redis-server
 
     steps:
       - name: Checkout code
