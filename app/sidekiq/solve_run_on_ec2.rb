@@ -1,4 +1,5 @@
 class SolveRunOnEc2
+  INSTANCE_TYPE = 'c6i.4xlarge'.freeze
   include Sidekiq::Job
 
   def perform(run_id)
@@ -6,8 +7,8 @@ class SolveRunOnEc2
 
     run = Run.find(run_id)
     run.ongoing!
-    Ec2::CreateInstance.call(run: run, disable_interconnector: true, instance_type: 'c6i.large')
-    Ec2::CreateInstance.call(run: run, disable_interconnector: false, instance_type: 'c6i.large')
+    Ec2::CreateInstance.call(run: run, disable_interconnector: true, instance_type: INSTANCE_TYPE)
+    Ec2::CreateInstance.call(run: run, disable_interconnector: false, instance_type: INSTANCE_TYPE)
   end
 
   private
