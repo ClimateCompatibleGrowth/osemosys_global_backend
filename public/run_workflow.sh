@@ -20,7 +20,7 @@ git reset --hard && git pull
 git reset --hard 9aeedf4f
 
 # Update conda environment
-conda env update -f workflow/envs/osemosys-global.yaml 
+/home/ubuntu/miniconda3/bin/conda env update -f workflow/envs/osemosys-global.yaml 
 
 wget --output-document=$config_file_path $config_file_url
 source /home/ubuntu/miniconda3/bin/activate osemosys-global
