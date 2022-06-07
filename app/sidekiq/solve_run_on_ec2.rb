@@ -1,5 +1,5 @@
 class SolveRunOnEc2
-  INSTANCE_TYPE = 'r6i.xlarge'.freeze
+  INSTANCE_TYPE = 'r6i.2xlarge'.freeze
   include Sidekiq::Job
 
   def perform(run_id)
