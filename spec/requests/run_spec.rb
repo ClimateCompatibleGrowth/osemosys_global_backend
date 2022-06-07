@@ -63,7 +63,7 @@ RSpec.describe 'Run queries' do
 
   describe 'GET show in yaml' do
     it 'renders the run with the interconnector' do
-      run = create(:run, interconnector_nodes: %w[US-Node1 US-Node2])
+      run = create(:run, interconnector_nodes: %w[US-REG1-NO US-REG2])
 
       get "/runs/#{run.slug}.yml"
 
@@ -73,8 +73,8 @@ RSpec.describe 'Run queries' do
       expect(parsed_result[:startYear]).to eq(run.start_year)
       expect(parsed_result[:slug]).to eq(run.slug)
       expect(parsed_result[:endYear]).to eq(run.end_year)
-      expect(parsed_result[:geographic_scope]).to eq(['IND'])
-      expect(parsed_result[:user_defined_capacity].keys.first).to eq('TRNNode1Node2')
+      expect(parsed_result[:geographic_scope]).to match_array(%w[REG1 REG2])
+      expect(parsed_result[:user_defined_capacity].keys.first).to eq('TRNREG1NOREG2')
       expect(parsed_result[:user_defined_capacity].values.first).to eq(
         [run.capacity, run.start_year],
       )

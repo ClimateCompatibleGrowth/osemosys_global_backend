@@ -31,6 +31,10 @@ class Run < ApplicationRecord
     "TRN#{short_nodes.join}"
   end
 
+  def generated_geographic_scope
+    interconnector_nodes.map { |node| node.split('-')[1] }.uniq
+  end
+
   private
 
   def generate_slug

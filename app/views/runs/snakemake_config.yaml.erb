@@ -22,8 +22,8 @@ timeshift: 0 # value between -11 and 12
 
 # Spatial Parameters
 geographic_scope:
-  <% @run.geographic_scope.each do |scope_slug| %>
-  - '<%= scope_slug %>'
+  <% @run.generated_geographic_scope.each do |region| %>
+  - '<%= region %>'
   <% end %>
 
 crossborderTrade: True

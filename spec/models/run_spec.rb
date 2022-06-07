@@ -111,4 +111,22 @@ RSpec.describe Run do
       expect(run.user_defined_technology_name).to eq('TRNINDEAINDSO')
     end
   end
+
+  describe '#generated_geographic_scope' do
+    it 'converts the node names to geographic scope' do
+      node1 = 'AS-IND-EA'
+      node2 = 'AS-NPL'
+      run = build(:run, interconnector_nodes: [node1, node2])
+
+      expect(run.generated_geographic_scope).to match_array(%w[IND NPL])
+    end
+
+    it 'excludes duplicates' do
+      node1 = 'AS-IND-EA'
+      node2 = 'AS-IND-SO'
+      run = build(:run, interconnector_nodes: [node1, node2])
+
+      expect(run.generated_geographic_scope).to match_array(%w[IND])
+    end
+  end
 end
