@@ -32,7 +32,7 @@ upload_results () {
   user_defined_capacity=$(yq '.user_defined_capacity' $config_file_path)
   run_slug=$(yq '.slug' $config_file_path)
 
-  if [ "$user_defined_capacity" == 'null' ]; then
+  if [ -z "$user_defined_capacity" ]; then
     interconnector_enabled=false
   else
     interconnector_enabled=true
