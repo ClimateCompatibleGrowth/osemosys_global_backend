@@ -4,19 +4,19 @@ RSpec.describe Ec2::CreateInstance do
   it 'spawns the instance' do
     run = create(:run)
     instance = instance_double(
-      'Instance',
+      Aws::EC2::Instance,
       id: 'abc',
       load: instance_double(
-        'Aws::EC2::Instance',
+        Aws::EC2::Instance,
         public_ip_address: '127.0.0.1',
         id: 'my-aws-id',
         instance_type: 't2.micro',
       ),
     )
     resource_double = instance_double(
-      'Aws::EC2::Resource',
+      Aws::EC2::Resource,
       client: instance_double(
-        'Aws::EC2::Client',
+        Aws::EC2::Client,
         wait_until: nil,
       ),
     )
@@ -35,19 +35,19 @@ RSpec.describe Ec2::CreateInstance do
   it 'creates an Ec2::Instance' do
     run = create(:run)
     instance = instance_double(
-      'Instance',
+      Aws::EC2::Instance,
       id: 'abc',
       load: instance_double(
-        'Aws::EC2::Instance',
+        Aws::EC2::Instance,
         public_ip_address: '127.0.0.1',
         id: 'my-aws-id',
         instance_type: 't2.micro',
       ),
     )
     resource_double = instance_double(
-      'Aws::EC2::Resource',
+      Aws::EC2::Resource,
       client: instance_double(
-        'Aws::EC2::Client',
+        Aws::EC2::Client,
         wait_until: nil,
       ),
     )
