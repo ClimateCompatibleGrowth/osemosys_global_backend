@@ -27,7 +27,7 @@ class Run < ApplicationRecord
   }
 
   def user_defined_technology_name
-    short_nodes = interconnector_nodes.map { |node| node.split('-')[1..].join }
+    short_nodes = interconnector_nodes.sort.map { |node| node.split('-')[1..].join }
     "TRN#{short_nodes.join}"
   end
 

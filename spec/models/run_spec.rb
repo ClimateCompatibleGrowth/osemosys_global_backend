@@ -110,6 +110,14 @@ RSpec.describe Run do
 
       expect(run.user_defined_technology_name).to eq('TRNINDEAINDSO')
     end
+
+    it 'sorts the nodes alphabetically' do
+      node1 = 'AS-XYZ-XX'
+      node2 = 'AS-ABC-XX'
+      run = build(:run, interconnector_nodes: [node1, node2])
+
+      expect(run.user_defined_technology_name).to eq('TRNABCXXXYZXX')
+    end
   end
 
   describe '#generated_geographic_scope' do
