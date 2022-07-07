@@ -46,7 +46,6 @@ results_by_country: True
 solver: 'cbc' # cbc, cplex, gurobi
 
 user_defined_capacity:
+  <% capacity = @disable_interconnector ? 0 : @run.capacity %>
   #technology: [capacity, first_year]
-<% if !@disable_interconnector %>
-  <%= @run.user_defined_technology_name %>: [<%= @run.capacity %>, <%= @run.start_year %>]
-<% end %>
+  <%= @run.user_defined_technology_name %>: [<%= capacity %>, <%= @run.start_year %>]

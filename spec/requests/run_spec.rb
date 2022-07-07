@@ -87,21 +87,21 @@ RSpec.describe 'Run queries' do
     end
 
     it 'renders the run without the interconnector when disabled' do
-      run = create(:run)
+      run = create(:run, capacity: 99, start_year: 2099)
 
       get "/runs/#{run.slug}.yml?disable_interconnector=true"
 
       parsed_result = YAML.safe_load(response.body).symbolize_keys
-      expect(parsed_result[:user_defined_capacity]).to be_nil
+      expect(parsed_result[:user_defined_capacity].values.first).to eq([0, 2099])
     end
 
     it 'renders the run with the interconnector when false is passed' do
-      run = create(:run)
+      run = create(:run, capacity: 99, start_year: 2099)
 
       get "/runs/#{run.slug}.yml?disable_interconnector=false"
 
       parsed_result = YAML.safe_load(response.body).symbolize_keys
-      expect(parsed_result[:user_defined_capacity]).not_to be_nil
+      expect(parsed_result[:user_defined_capacity].values.first).to eq([99, 2099])
     end
   end
 
