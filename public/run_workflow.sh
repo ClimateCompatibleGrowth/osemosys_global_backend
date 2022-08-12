@@ -25,7 +25,7 @@ git reset --hard 9aeedf4f
 wget --output-document=$config_file_path $config_file_url
 source /home/ubuntu/miniconda3/bin/activate osemosys-global
 snakemake_exit_code=0
-timeout 1h snakemake -c || snakemake_exit_code=$?
+timeout 10h snakemake -c || snakemake_exit_code=$?
 
 upload_results () {
   scenario_name=$(yq '.scenario' $config_file_path)
