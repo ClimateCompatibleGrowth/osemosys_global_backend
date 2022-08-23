@@ -44,12 +44,14 @@ upload_results () {
     generation_by_node_attachment_name="generation_by_node_with_interconnector"
     metrics_attachment_name="metrics_with_interconnector"
     trade_flows_attachment_name="trade_flows_with_interconnector"
+    log_attachement_name="log_with_interconnector"
   else
     capacities_attachment_name="capacities_without_interconnector"
     generation_attachment_name="generation_without_interconnector"
     generation_by_node_attachment_name="generation_by_node_without_interconnector"
     metrics_attachment_name="metrics_without_interconnector"
     trade_flows_attachment_name="trade_flows_without_interconnector"
+    log_attachement_name="log_without_interconnector"
   fi
 
   # Only do this if success
@@ -59,6 +61,7 @@ upload_results () {
     --form "${generation_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/Generation.csv" \
     --form "${generation_by_node_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/Generation_By_Node.csv" \
     --form "${metrics_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/Metrics.csv" \
+    --form "${log_attachement_name}=@/var/log/cloud-init-output.log" \
     --form "${trade_flows_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/TradeFlows.csv"
 }
 

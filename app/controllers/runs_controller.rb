@@ -75,6 +75,8 @@ class RunsController < ApplicationController
       :metrics_without_interconnector,
       :trade_flows_with_interconnector,
       :trade_flows_without_interconnector,
+      :log_with_interconnector,
+      :log_without_interconnector,
     )
   end
 
