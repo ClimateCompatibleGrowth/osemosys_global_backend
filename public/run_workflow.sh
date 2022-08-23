@@ -54,7 +54,6 @@ upload_results () {
     log_attachement_name="log_without_interconnector"
   fi
 
-  # Only do this if success
   curl --request PUT \
     --url "${api_url}/runs/${run_slug}" \
     --form "${capacities_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/Capacities.csv" \
@@ -65,9 +64,31 @@ upload_results () {
     --form "${trade_flows_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/TradeFlows.csv"
 }
 
+upload_logs_on_failure () {
+  scenario_name=$(yq '.scenario' $config_file_path)
+  user_defined_capacity=$(yq '.user_defined_capacity' $config_file_path)
+  run_slug=$(yq '.slug' $config_file_path)
+
+  if [ -z "$user_defined_capacity" ]; then
+    interconnector_enabled=false
+  else
+    interconnector_enabled=true
+  fi
+
+  if [ "$interconnector_enabled" == true ]; then
+    log_attachement_name="log_with_interconnector"
+  else
+    log_attachement_name="log_without_interconnector"
+  fi
+
+  curl --request PUT \
+    --url "${api_url}/runs/${run_slug}" \
+    --form "${log_attachement_name}=@/var/log/cloud-init-output.log"
+  }
 
 if [ "$snakemake_exit_code" == 0 ]; then
   upload_results
 else
-  echo "Snakemake failed, skipping result upload. Maybe upload log here?"
+  echo "Snakemake failed, skipping result upload. Uploading logs."
+  upload_logs_on_failure
 fi
