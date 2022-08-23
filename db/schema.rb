@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_08_130937) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_23_124335) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -68,6 +68,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_08_130937) do
     t.string "geographic_scope", default: [], null: false, array: true
     t.string "status", default: "pending", null: false
     t.string "interconnector_nodes", default: [], null: false, array: true
+    t.json "parameter_rows"
     t.index ["slug"], name: "index_runs_on_slug", unique: true
   end
 

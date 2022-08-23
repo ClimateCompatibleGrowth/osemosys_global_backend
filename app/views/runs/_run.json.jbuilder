@@ -10,6 +10,7 @@ json.(
   :email,
   :geographic_scope,
   :status,
+  :parameter_rows,
 )
 
 json.results do

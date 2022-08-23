@@ -50,6 +50,14 @@ class RunsController < ApplicationController
       resolution: {},
       geographic_scope: [],
       interconnector_nodes: [],
+      parameter_rows: [
+        :id,
+        :type,
+        :capacity,
+        :start_year,
+        :end_year,
+        interconnector_nodes: [],
+      ],
     )
   end
 

@@ -125,27 +125,47 @@ RSpec.describe 'Run queries' do
             ],
           },
           geographic_scope: %w[AFR EUR],
+          parameter_rows: [
+            {
+              id: 0,
+              type: 'interconnector',
+              interconnector_nodes: %w[AF-AGO-XX AF-COD-XX],
+              capacity: 1,
+              start_year: 2020,
+              end_year: 2050,
+            },
+          ],
         }
 
       expect(Run.count).to eq(1)
-      result = JSON.parse(response.body).symbolize_keys
+      result = JSON.parse(response.body).deep_symbolize_keys
       expect(result).to include(
         interconnector_nodes: %w[Node1 Node2],
         capacity: 99,
         start_year: 2019,
         end_year: 2029,
         resolution: {
-          'day_parts' => [
-            { 'id' => 'Morning', 'start_hour' => 0, 'end_hour' => 12 },
-            { 'id' => 'Night', 'start_hour' => 12, 'end_hour' => 24 },
+          day_parts: [
+            { id: 'Morning', start_hour: 0, end_hour: 12 },
+            { id: 'Night', start_hour: 12, end_hour: 24 },
           ],
-          'seasons' => [
-            { 'id' => 'Winter', 'months' => [1, 2, 3, 4, 5, 6] },
-            { 'id' => 'Summer', 'months' => [7, 8, 9, 10, 11, 12] },
+          seasons: [
+            { id: 'Winter', months: [1, 2, 3, 4, 5, 6] },
+            { id: 'Summer', months: [7, 8, 9, 10, 11, 12] },
           ],
         },
         slug: match('node1-node2-99-2029'),
         geographic_scope: %w[AFR EUR],
+        parameter_rows: [
+          {
+            id: 0,
+            type: 'interconnector',
+            interconnector_nodes: %w[AF-AGO-XX AF-COD-XX],
+            capacity: 1,
+            start_year: 2020,
+            end_year: 2050,
+          },
+        ],
       )
     end
 
