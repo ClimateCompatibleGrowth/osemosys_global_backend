@@ -124,7 +124,13 @@ RSpec.describe Run do
     it 'converts the node names to geographic scope' do
       node1 = 'AS-IND-EA'
       node2 = 'AS-NPL'
-      run = build(:run, interconnector_nodes: [node1, node2])
+      run = build(
+        :run,
+        parameter_rows: [
+          { interconnector_nodes: [node1, node2] },
+          { interconnector_nodes: [node2, node1] },
+        ],
+      )
 
       expect(run.generated_geographic_scope).to match_array(%w[IND NPL])
     end
@@ -132,7 +138,13 @@ RSpec.describe Run do
     it 'excludes duplicates' do
       node1 = 'AS-IND-EA'
       node2 = 'AS-IND-SO'
-      run = build(:run, interconnector_nodes: [node1, node2])
+      run = build(
+        :run,
+        parameter_rows: [
+          { interconnector_nodes: [node1, node2] },
+          { interconnector_nodes: [node2, node1] },
+        ],
+      )
 
       expect(run.generated_geographic_scope).to match_array(%w[IND])
     end

@@ -32,7 +32,7 @@ class Run < ApplicationRecord
   end
 
   def generated_geographic_scope
-    interconnector_nodes.map { |node| node.split('-')[1] }.uniq
+    parsed_parameter_rows.flat_map(&:geographic_scope).uniq
   end
 
   def parsed_parameter_rows

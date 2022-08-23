@@ -63,7 +63,17 @@ RSpec.describe 'Run queries' do
 
   describe 'GET show in yaml' do
     it 'renders the run with the interconnector' do
-      run = create(:run, interconnector_nodes: %w[US-REG1-NO US-REG2])
+      run = create(
+        :run,
+        parameter_rows: [
+          {
+            interconnector_nodes: %w[US-REG1-NO US-REG2],
+            capacity: 1,
+            start_year: 2020,
+            end_year: 2050,
+          },
+        ],
+      )
 
       get "/runs/#{run.slug}.yml"
 
@@ -74,7 +84,7 @@ RSpec.describe 'Run queries' do
       expect(parsed_result[:geographic_scope]).to match_array(%w[REG1 REG2])
       expect(parsed_result[:user_defined_capacity].keys.first).to eq('TRNREG1NOREG2')
       expect(parsed_result[:user_defined_capacity].values.first).to eq(
-        [run.capacity, run.start_year],
+        [1, 2020],
       )
       expect(parsed_result[:dayparts].keys).to eq(run.day_parts.map { |day_part| day_part['id'] })
       expect(parsed_result[:dayparts].values).to eq(
@@ -85,7 +95,14 @@ RSpec.describe 'Run queries' do
     end
 
     it 'renders the run without the interconnector when disabled' do
-      run = create(:run, capacity: 99, start_year: 2099)
+      run = create(
+        :run,
+        parameter_rows: [
+          {
+            capacity: 99, start_year: 2_099, interconnector_nodes: %w[AS-IND-EA AS-IND-NP]
+          },
+        ],
+      )
 
       get "/runs/#{run.slug}.yml?disable_interconnector=true"
 
@@ -94,7 +111,14 @@ RSpec.describe 'Run queries' do
     end
 
     it 'renders the run with the interconnector when false is passed' do
-      run = create(:run, capacity: 99, start_year: 2099)
+      run = create(
+        :run,
+        parameter_rows: [
+          {
+            capacity: 99, start_year: 2_099, interconnector_nodes: %w[AS-IND-EA AS-IND-NP]
+          },
+        ],
+      )
 
       get "/runs/#{run.slug}.yml?disable_interconnector=false"
 
