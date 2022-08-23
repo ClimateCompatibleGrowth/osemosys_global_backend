@@ -1,8 +1,11 @@
 # Auto-generated config for run <%= @run.id %>
 
-# Scenario Name
-scenario: <%= @run.slug %>
+# Metadata for the Cloud backend:
 slug: '<%= @run.slug %>'
+interconnector_enabled: <%= !@disable_interconnector %>
+
+# Scenario name
+scenario: <%= @run.slug %>
 
 # Temporal Parameters
 startYear: 2015
