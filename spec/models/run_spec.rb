@@ -19,6 +19,32 @@ RSpec.describe Run do
     end
   end
 
+  describe 'before_save callbacks' do
+    it 'sets the status to completed if both runs are finished' do
+      run = build(
+        :run,
+        with_interconnector_finished_at: 2.minutes.ago,
+        without_interconnector_finished_at: 2.minutes.ago,
+      )
+
+      run.save
+
+      expect(run.status).to eq('completed')
+    end
+
+    it 'does not set the status to completed if one of the runs is not finished' do
+      run = build(
+        :run,
+        with_interconnector_finished_at: nil,
+        without_interconnector_finished_at: 2.minutes.ago,
+      )
+
+      run.save
+
+      expect(run.status).not_to eq('completed')
+    end
+  end
+
   describe 'validations' do
     it 'enforces correct sesaons' do
       run_with_malformed_seasons = build(

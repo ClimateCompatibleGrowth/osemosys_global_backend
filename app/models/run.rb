@@ -1,5 +1,6 @@
 class Run < ApplicationRecord
   before_validation :generate_slug
+  before_save :set_status_to_completed_if_both_runs_finished
   after_commit :enqueue_solve_run, on: :create
 
   validates :interconnector_nodes, :capacity, :start_year, :end_year, :slug, presence: true
@@ -29,8 +30,7 @@ class Run < ApplicationRecord
   enum status: {
     pending: 'pending',
     ongoing: 'ongoing',
-    succeeded: 'succeeded',
-    failed: 'failed',
+    completed: 'completed',
   }
 
   def user_defined_technology_name
@@ -81,5 +81,11 @@ class Run < ApplicationRecord
 
   def enqueue_solve_run
     SolveRunOnEc2.perform_async(id)
+  end
+
+  def set_status_to_completed_if_both_runs_finished
+    if with_interconnector_finished_at.present? && without_interconnector_finished_at.present?
+      self.status = 'completed'
+    end
   end
 end
