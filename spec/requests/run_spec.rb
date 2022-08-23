@@ -62,7 +62,7 @@ RSpec.describe 'Run queries' do
   end
 
   describe 'GET show in yaml' do
-    it 'renders the run with the interconnector' do
+    it 'renders the run with one interconnector' do
       run = create(
         :run,
         parameter_rows: [
@@ -92,6 +92,37 @@ RSpec.describe 'Run queries' do
       )
       expect(parsed_result[:seasons].keys).to eq(run.seasons.map { |season| season['id'] })
       expect(parsed_result[:seasons].values).to eq(run.seasons.map { |season| season['months'] })
+    end
+
+    it 'supports multiple interconnectors' do
+      run = create(
+        :run,
+        parameter_rows: [
+          {
+            interconnector_nodes: %w[US-REG1-NO US-REG2],
+            capacity: 1,
+            start_year: 2020,
+          },
+          {
+            interconnector_nodes: %w[US-REG2-NO US-REG3],
+            capacity: 2,
+            start_year: 2021,
+          },
+        ],
+      )
+
+      get "/runs/#{run.slug}.yml"
+
+      parsed_result = YAML.safe_load(response.body).symbolize_keys
+      expect(parsed_result[:geographic_scope]).to match_array(%w[REG1 REG2 REG3])
+      expect(parsed_result[:user_defined_capacity].keys.first).to eq('TRNREG1NOREG2')
+      expect(parsed_result[:user_defined_capacity].keys.last).to eq('TRNREG2NOREG3')
+      expect(parsed_result[:user_defined_capacity].values.first).to eq(
+        [1, 2020],
+      )
+      expect(parsed_result[:user_defined_capacity].values.last).to eq(
+        [2, 2021],
+      )
     end
 
     it 'renders the run without the interconnector when disabled' do
