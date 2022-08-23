@@ -18,5 +18,25 @@ FactoryBot.define do
       }
     end
     geographic_scope { %i[IND] }
+    parameter_rows {
+      [
+        {
+          id: 0,
+          type: 'interconnector',
+          interconnector_nodes: %w[AF-AGO-XX AF-COD-XX],
+          capacity: 1,
+          start_year: 2020,
+          end_year: 2050,
+        },
+        {
+          id: 1,
+          type: 'interconnector',
+          interconnector_nodes: %w[AF-JPN-XX AF-KOR-XX],
+          capacity: 1,
+          start_year: 2020,
+          end_year: 2050,
+        },
+      ]
+    }
   end
 end

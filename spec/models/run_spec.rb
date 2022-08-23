@@ -137,4 +137,41 @@ RSpec.describe Run do
       expect(run.generated_geographic_scope).to match_array(%w[IND])
     end
   end
+
+  describe '#parsed_paramater_rows' do
+    it 'is an array of `ParameterRow` objects' do
+      run = build(
+        :run,
+        parameter_rows: [
+          {
+            id: 0,
+            type: 'interconnector',
+            interconnector_nodes: %w[AF-AGO-XX AF-COD-XX],
+            capacity: 20,
+            start_year: 2020,
+            end_year: 2050,
+          },
+          {
+            id: 1,
+            type: 'interconnector',
+            interconnector_nodes: %w[AF-JPN-XX AF-KOR-XX],
+            capacity: 30,
+            start_year: 2020,
+            end_year: 2050,
+          },
+        ],
+      )
+
+      result = run.parsed_parameter_rows
+
+      expect(result.count).to eq(2)
+      first_row = result.last
+      expect(first_row).to be_a(ParameterRow)
+      expect(first_row.type).to eq('interconnector')
+      expect(first_row.interconnector_nodes).to eq(%w[AF-JPN-XX AF-KOR-XX])
+      expect(first_row.capacity).to eq(30)
+      expect(first_row.start_year).to eq(2020)
+      expect(first_row.end_year).to eq(2050)
+    end
+  end
 end

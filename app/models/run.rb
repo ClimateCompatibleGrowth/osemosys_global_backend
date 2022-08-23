@@ -35,6 +35,10 @@ class Run < ApplicationRecord
     interconnector_nodes.map { |node| node.split('-')[1] }.uniq
   end
 
+  def parsed_parameter_rows
+    parameter_rows.map { |data| ParameterRow.new(**data) }
+  end
+
   private
 
   def generate_slug
