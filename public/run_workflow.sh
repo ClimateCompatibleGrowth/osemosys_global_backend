@@ -12,6 +12,9 @@ fi
 config_file_url=$1
 config_file_path="/home/ubuntu/osemosys_global/config/config.yaml"
 api_url="https://osemosys-global-backend.herokuapp.com"
+scenario_name=$(yq '.scenario' $config_file_path)
+interconnector_enabled=$(yq '.interconnector_enabled' $config_file_path)
+run_slug=$(yq '.slug' $config_file_path)
 
 cd /home/ubuntu/osemosys_global/
 
@@ -28,16 +31,6 @@ snakemake_exit_code=0
 timeout 10h snakemake -c || snakemake_exit_code=$?
 
 upload_results () {
-  scenario_name=$(yq '.scenario' $config_file_path)
-  user_defined_capacity=$(yq '.user_defined_capacity' $config_file_path)
-  run_slug=$(yq '.slug' $config_file_path)
-
-  if [ -z "$user_defined_capacity" ]; then
-    interconnector_enabled=false
-  else
-    interconnector_enabled=true
-  fi
-
   if [ "$interconnector_enabled" == true ]; then
     capacities_attachment_name="capacities_with_interconnector"
     generation_attachment_name="generation_with_interconnector"
@@ -65,16 +58,6 @@ upload_results () {
 }
 
 upload_logs_on_failure () {
-  scenario_name=$(yq '.scenario' $config_file_path)
-  user_defined_capacity=$(yq '.user_defined_capacity' $config_file_path)
-  run_slug=$(yq '.slug' $config_file_path)
-
-  if [ -z "$user_defined_capacity" ]; then
-    interconnector_enabled=false
-  else
-    interconnector_enabled=true
-  fi
-
   if [ "$interconnector_enabled" == true ]; then
     log_attachement_name="log_with_interconnector"
   else
@@ -84,7 +67,7 @@ upload_logs_on_failure () {
   curl --request PUT \
     --url "${api_url}/runs/${run_slug}" \
     --form "${log_attachement_name}=@/var/log/cloud-init-output.log"
-  }
+}
 
 if [ "$snakemake_exit_code" == 0 ]; then
   upload_results
