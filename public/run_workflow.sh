@@ -49,7 +49,7 @@ upload_results () {
     log_attachement_name="log_without_interconnector"
   fi
 
-  curl --request PUT \
+  curl --verbose --request PUT \
     --url "${api_url}/runs/${run_slug}" \
     --form "${capacities_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/Capacities.csv" \
     --form "${generation_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/Generation.csv" \
@@ -66,14 +66,18 @@ upload_logs_on_failure () {
     log_attachement_name="log_without_interconnector"
   fi
 
-  curl --request PUT \
+  curl --verbose --request PUT \
     --url "${api_url}/runs/${run_slug}" \
     --form "${log_attachement_name}=@/var/log/cloud-init-output.log"
 }
 
 if [ "$snakemake_exit_code" == 0 ]; then
+  sleep 1
   upload_results
+  sleep 1
 else
   echo "Snakemake failed, skipping result upload. Uploading logs."
+  sleep 1
   upload_logs_on_failure
+  sleep 1
 fi
