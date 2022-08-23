@@ -9,13 +9,6 @@ if [ "$#" -ne 1 ]; then
   exit
 fi
 
-config_file_url=$1
-config_file_path="/home/ubuntu/osemosys_global/config/config.yaml"
-api_url="https://osemosys-global-backend.herokuapp.com"
-scenario_name=$(yq '.scenario' $config_file_path)
-interconnector_enabled=$(yq '.interconnector_enabled' $config_file_path)
-run_slug=$(yq '.slug' $config_file_path)
-
 cd /home/ubuntu/osemosys_global/
 
 # Pin the version
@@ -25,10 +18,19 @@ git reset --hard 8df3389
 # Update conda environment
 /home/ubuntu/miniconda3/bin/conda env update -f workflow/envs/osemosys-global.yaml 
 
+config_file_url=$1
+config_file_path="/home/ubuntu/osemosys_global/config/config.yaml"
+
 wget --output-document=$config_file_path $config_file_url
+
 source /home/ubuntu/miniconda3/bin/activate osemosys-global
 snakemake_exit_code=0
 timeout 10h snakemake -c || snakemake_exit_code=$?
+
+api_url="https://osemosys-global-backend.herokuapp.com"
+scenario_name=$(yq '.scenario' $config_file_path)
+interconnector_enabled=$(yq '.interconnector_enabled' $config_file_path)
+run_slug=$(yq '.slug' $config_file_path)
 
 upload_results () {
   if [ "$interconnector_enabled" == true ]; then
