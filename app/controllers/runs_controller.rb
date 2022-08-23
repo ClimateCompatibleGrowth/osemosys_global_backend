@@ -69,6 +69,8 @@ class RunsController < ApplicationController
       :capacities_without_interconnector,
       :generation_with_interconnector,
       :generation_without_interconnector,
+      :generation_by_node_with_interconnector,
+      :generation_by_node_without_interconnector,
       :metrics_with_interconnector,
       :metrics_without_interconnector,
       :trade_flows_with_interconnector,

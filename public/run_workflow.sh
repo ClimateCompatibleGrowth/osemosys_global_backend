@@ -41,11 +41,13 @@ upload_results () {
   if [ "$interconnector_enabled" == true ]; then
     capacities_attachment_name="capacities_with_interconnector"
     generation_attachment_name="generation_with_interconnector"
+    generation_by_node_attachment_name="generation_by_node_with_interconnector"
     metrics_attachment_name="metrics_with_interconnector"
     trade_flows_attachment_name="trade_flows_with_interconnector"
   else
     capacities_attachment_name="capacities_without_interconnector"
     generation_attachment_name="generation_without_interconnector"
+    generation_by_node_attachment_name="generation_by_node_without_interconnector"
     metrics_attachment_name="metrics_without_interconnector"
     trade_flows_attachment_name="trade_flows_without_interconnector"
   fi
@@ -55,6 +57,7 @@ upload_results () {
     --url "${api_url}/runs/${run_slug}" \
     --form "${capacities_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/Capacities.csv" \
     --form "${generation_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/Generation.csv" \
+    --form "${generation_by_node_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/Generation_By_Node.csv" \
     --form "${metrics_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/Metrics.csv" \
     --form "${trade_flows_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/TradeFlows.csv"
 }
