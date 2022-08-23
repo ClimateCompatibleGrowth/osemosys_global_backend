@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_23_124335) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_23_232813) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -69,6 +69,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_23_124335) do
     t.string "status", default: "pending", null: false
     t.string "interconnector_nodes", default: [], null: false, array: true
     t.json "parameter_rows"
+    t.datetime "with_interconnector_finished_at"
+    t.datetime "without_interconnector_finished_at"
     t.index ["slug"], name: "index_runs_on_slug", unique: true
   end
 
