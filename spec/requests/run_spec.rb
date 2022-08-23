@@ -70,9 +70,7 @@ RSpec.describe 'Run queries' do
       parsed_result = YAML.safe_load(response.body).symbolize_keys
       expect(response.body).to include("Auto-generated config for run #{run.id}")
       expect(parsed_result[:scenario]).to eq(run.slug)
-      expect(parsed_result[:startYear]).to eq(run.start_year)
       expect(parsed_result[:slug]).to eq(run.slug)
-      expect(parsed_result[:endYear]).to eq(run.end_year)
       expect(parsed_result[:geographic_scope]).to match_array(%w[REG1 REG2])
       expect(parsed_result[:user_defined_capacity].keys.first).to eq('TRNREG1NOREG2')
       expect(parsed_result[:user_defined_capacity].values.first).to eq(
