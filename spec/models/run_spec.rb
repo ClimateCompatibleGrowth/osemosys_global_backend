@@ -128,24 +128,6 @@ RSpec.describe Run do
     end
   end
 
-  describe '#user_defined_technology_name' do
-    it 'converts the node names to user defined techonology' do
-      node1 = 'AS-IND-EA'
-      node2 = 'AS-IND-SO'
-      run = build(:run, interconnector_nodes: [node1, node2])
-
-      expect(run.user_defined_technology_name).to eq('TRNINDEAINDSO')
-    end
-
-    it 'sorts the nodes alphabetically' do
-      node1 = 'AS-XYZ-XX'
-      node2 = 'AS-ABC-XX'
-      run = build(:run, interconnector_nodes: [node1, node2])
-
-      expect(run.user_defined_technology_name).to eq('TRNABCXXXYZXX')
-    end
-  end
-
   describe '#generated_geographic_scope' do
     it 'converts the node names to geographic scope' do
       node1 = 'AS-IND-EA'

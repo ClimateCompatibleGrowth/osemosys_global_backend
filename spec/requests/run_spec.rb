@@ -221,18 +221,6 @@ RSpec.describe 'Run queries' do
         ],
       )
     end
-
-    it 'returns an error message when the params are invalid' do
-      post '/runs', as: :json, params: {}
-
-      expect(Run.count).to eq(0)
-      expect(response.code).to eq('400')
-      result = JSON.parse(response.body).symbolize_keys
-      expect(result).to include(errors: match("Interconnector nodes can't be blank"))
-      expect(result).to include(errors: match("Capacity can't be blank"))
-      expect(result).to include(errors: match("Start year can't be blank"))
-      expect(result).to include(errors: match("End year can't be blank"))
-    end
   end
 
   describe 'PUT update' do

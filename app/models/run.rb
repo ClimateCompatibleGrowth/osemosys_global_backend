@@ -3,7 +3,7 @@ class Run < ApplicationRecord
   before_save :set_status_to_completed_if_both_runs_finished
   after_commit :enqueue_solve_run, on: :create
 
-  validates :interconnector_nodes, :capacity, :start_year, :end_year, :slug, presence: true
+  validates :slug, presence: true
   validate :enforce_season_format
   validate :enforce_day_parts_format
 
@@ -32,11 +32,6 @@ class Run < ApplicationRecord
     ongoing: 'ongoing',
     completed: 'completed',
   }
-
-  def user_defined_technology_name
-    short_nodes = interconnector_nodes.sort.map { |node| node.split('-')[1..].join }
-    "TRN#{short_nodes.join}"
-  end
 
   def generated_geographic_scope
     parsed_parameter_rows.flat_map(&:geographic_scope).uniq
