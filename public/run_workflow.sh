@@ -20,12 +20,13 @@ git reset --hard 8df3389
 
 config_file_url=$1
 config_file_path="/home/ubuntu/osemosys_global/config/config.yaml"
+log_file_path="/home/ubuntu/run.log"
 
 wget --output-document=$config_file_path $config_file_url
 
 source /home/ubuntu/miniconda3/bin/activate osemosys-global
 snakemake_exit_code=0
-timeout 10h snakemake -c || snakemake_exit_code=$?
+timeout 10h snakemake -c &> "$log_file_path" || snakemake_exit_code=$?
 
 api_url="https://osemosys-global-backend.herokuapp.com"
 scenario_name=$(yq '.scenario' $config_file_path)
@@ -51,12 +52,13 @@ upload_results () {
     finished_at_name="without_interconnector_finished_at"
   fi
 
-  curl --verbose --request PUT \
+  curl --request PUT \
     --url "${api_url}/runs/${run_slug}" \
     --form "${capacities_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/Capacities.csv" \
     --form "${generation_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/Generation.csv" \
     --form "${generation_by_node_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/Generation_By_Node.csv" \
     --form "${metrics_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/Metrics.csv" \
+    --form "${log_attachement_name}=@${log_file_path}" \
     --form "${finished_at_name}=$(date)" \
     --form "${trade_flows_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/TradeFlows.csv"
 }
@@ -70,18 +72,15 @@ upload_logs_on_failure () {
     finished_at_name="without_interconnector_finished_at"
   fi
 
-  curl --verbose --request PUT \
+  curl --request PUT \
+    --form "${log_attachement_name}=@${log_file_path}" \
     --url "${api_url}/runs/${run_slug}" \
     --form "${finished_at_name}=$(date)"
 }
 
 if [ "$snakemake_exit_code" == 0 ]; then
-  sleep 1
   upload_results
-  sleep 1
 else
   echo "Snakemake failed, skipping result upload. Uploading logs."
-  sleep 1
   upload_logs_on_failure
-  sleep 1
 fi
