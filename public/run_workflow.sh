@@ -57,7 +57,6 @@ upload_results () {
     --form "${generation_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/Generation.csv" \
     --form "${generation_by_node_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/Generation_By_Node.csv" \
     --form "${metrics_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/Metrics.csv" \
-    --form "${log_attachement_name}=@/var/log/cloud-init-output.log" \
     --form "${finished_at_name}=$(date)" \
     --form "${trade_flows_attachment_name}=@/home/ubuntu/osemosys_global/results/${scenario_name}/result_summaries/TradeFlows.csv"
 }
@@ -73,8 +72,7 @@ upload_logs_on_failure () {
 
   curl --verbose --request PUT \
     --url "${api_url}/runs/${run_slug}" \
-    --form "${finished_at_name}=$(date)" \
-    --form "${log_attachement_name}=@/var/log/cloud-init-output.log"
+    --form "${finished_at_name}=$(date)"
 }
 
 if [ "$snakemake_exit_code" == 0 ]; then
