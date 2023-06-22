@@ -13,7 +13,7 @@ cd /home/ubuntu/osemosys_global/
 
 # Pin the version
 git reset --hard && git pull
-git reset --hard 7eb038d
+git reset --hard 6fd52ef
 
 # Update conda environment
 /home/ubuntu/miniconda3/bin/conda env update -f workflow/envs/osemosys-global.yaml 
